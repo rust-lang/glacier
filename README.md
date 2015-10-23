@@ -23,9 +23,10 @@ Contributing to Glacier is fairly easy:
 2. Pick one.
 3. Create a file in `src/` with the same digit as the bug, for example,
    `src/29161.rs` for [this one][29161].
-4. Copy the code that causes the ICE into your new file.
+4. Copy the code that causes the ICE into your new file. ([like this][file])
 5. (optional) Verify it works by running `./test.sh` to run the tests.
 6. Send a pull request!
 
 [ices]: https://github.com/rust-lang/rust/issues?q=is%3Aopen+is%3Aissue+label%3AI-ICE
 [29161]: https://github.com/rust-lang/rust/issues/29161
+[file]: https://github.com/steveklabnik/glacier/blob/master/src/29161.rs
