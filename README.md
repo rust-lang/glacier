@@ -1,6 +1,6 @@
 # Glacier
 
-A whole pile of ICE.
+A big ‘ol pile of ICE.
 
 [![Build Status](https://travis-ci.org/steveklabnik/glacier.svg?branch=master)](https://travis-ci.org/steveklabnik/glacier)
 
