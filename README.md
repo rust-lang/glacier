@@ -26,7 +26,7 @@ Contributing to Glacier is fairly easy:
 5. (optional) Verify it works by running `./test.sh` to run the tests.
 6. Send a pull request! ([like this][pr])
 
-[ices]: https://github.com/rust-lang/rust/issues?q=is%3Aopen+is%3Aissue+label%3AI-ICE
+[ices]: https://github.com/rust-lang/rust/issues/29249
 [29161]: https://github.com/rust-lang/rust/issues/29161
 [file]: https://github.com/steveklabnik/glacier/blob/master/src/29161.rs
 [pr]: https://github.com/steveklabnik/glacier/pull/1
