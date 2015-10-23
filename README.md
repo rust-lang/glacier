@@ -2,6 +2,8 @@
 
 A whole pile of ICE.
 
+[![Build Status](https://travis-ci.org/steveklabnik/glacier.svg?branch=master)](https://travis-ci.org/steveklabnik/glacier)
+
 This repository is used to test internal compiler errors (also known as ICEs)
 in [Rust]. An ICE means that something went wrong, something unexpected. As
 such, sometimes, ICEs get randomly fixed. A compiler refactoring will remove
