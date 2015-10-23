@@ -31,3 +31,7 @@ Contributing to Glacier is fairly easy:
 [29161]: https://github.com/rust-lang/rust/issues/29161
 [file]: https://github.com/steveklabnik/glacier/blob/master/src/29161.rs
 [pr]: https://github.com/steveklabnik/glacier/pull/1
+
+## License
+
+MIT/Apache2, just like Rust.
