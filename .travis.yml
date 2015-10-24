@@ -1,3 +1,7 @@
 language: rust
 rust: nightly
 script: bash test.sh
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y debootstrap
