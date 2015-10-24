@@ -14,3 +14,8 @@ do
     exit 1
   fi
 done
+
+echo "Testing 16229"
+if bash 16229.sh > /dev/null 2>&1; then
+  exit 1
+fi
