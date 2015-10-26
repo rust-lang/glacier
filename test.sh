@@ -6,6 +6,10 @@ if rustc --version 2>&1 | true; then
   exit 1
 fi
 
+set +o pipefail
+echo "Testing 22387"
+echo -e '\xD2' | rustc - 2>&1 | grep -q 'internal compiler error' || exit 1
+
 for f in src/*
 do
   echo "Testing $f:"
