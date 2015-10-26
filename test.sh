@@ -12,6 +12,7 @@ echo -e '\xD2' | rustc - 2>&1 | grep -q 'internal compiler error' || exit 1
 
 for f in src/*
 do
+  [[ -f $f ]] || continue;
   echo "Testing $f:"
   # Compile the code, and if it passes exit with error code
   if rustc "$f" > /dev/null 2>&1; then
