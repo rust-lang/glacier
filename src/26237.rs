@@ -1,5 +1,11 @@
-static mut TEST: [isize; 1] = [1];
-static mut TEST2: &'static mut [isize] = unsafe { &mut TEST };
+macro_rules! macro_panic {
+    ($not_a_function:expr, $some_argument:ident) => { 
+        $not_a_function($some_argument)
+    }   
+}
+
 fn main() {
-    println!("{}", unsafe { TEST2[0] });
+    let mut value_a = 0;
+    let mut value_b = 0;
+    macro_panic!(value_a, value_b);
 }
