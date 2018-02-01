@@ -1,8 +1,5 @@
 #!/bin/bash
 
-echo "Testing 22387"
-echo -e '\xD2' | rustc - 2>&1 | grep -q 'internal compiler error' || exit 1
-
 for f in src/*
 do
   [[ -f $f ]] || continue;
