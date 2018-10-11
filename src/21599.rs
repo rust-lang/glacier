@@ -1,7 +1,8 @@
 #![no_std]
-#![feature(box_syntax,unique)]
-#![feature(no_std,lang_items)]
+#![feature(box_syntax)]
+#![feature(lang_items, ptr_internals)]
 
+use core::panic::PanicInfo;
 use core::ptr::Unique;
 
 #[lang="owned_box"]
@@ -16,4 +17,6 @@ fn main() {
 
 #[lang = "exchange_malloc"] extern fn exchange_malloc() {}
 #[lang = "eh_personality"] extern fn eh_personality() {}
-#[lang = "panic_fmt"] fn panic_fmt() -> ! { loop{} }
+
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! { loop {} }
