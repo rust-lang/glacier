@@ -18,9 +18,6 @@ do
   fi
 done
 
-echo "Testing 21335"
-$RUSTC - --out-dir=random_directory_that_does_not_exist/ --emit=llvm-ir <<< 'fn main(){}'
-
 echo "Testing 16229"
 if bash 16229.sh > /dev/null 2>&1; then
   exit 1
