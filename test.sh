@@ -2,7 +2,7 @@
 
 RUSTC=rustc
 
-for f in src/*
+for f in ices/*
 do
   [[ -f $f ]] || continue;
   echo "Testing $f:"
