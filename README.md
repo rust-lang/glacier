@@ -21,15 +21,12 @@ Contributing to Glacier is fairly easy:
 
 1. Check out [this list][ices] of bugs on the Rust issue tracker.
 2. Pick one.
-3. Create a file in `src/` with the same digit as the bug. ([like this][29161])
-4. Copy the code that causes the ICE into your new file. ([like this][file])
-5. (optional) Verify it works by running `./test.sh` to run the tests.
-6. Send a pull request! ([like this][pr])
+3. Create a file in `ices/` with the same digit as the bug.
+4. Copy the code that causes the ICE into your new file.
+5. (optional) Verify it works by running `cargo run` to run the tests.
+6. Send a pull request!
 
-[ices]: https://github.com/rust-lang/rust/issues/29249
-[29161]: https://github.com/rust-lang/rust/issues/29161
-[file]: https://github.com/steveklabnik/glacier/blob/master/src/29161.rs
-[pr]: https://github.com/steveklabnik/glacier/pull/1
+[ices]: https://github.com/rust-lang/rust/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3AI-ICE+-label%3Aglacier
 
 ## License
 
