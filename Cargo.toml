@@ -9,3 +9,8 @@ edition = "2018"
 [dependencies]
 rayon = "1.2.0"
 tempfile = "3.1.0"
+
+[workspace]
+members = [
+    "autofix"
+]

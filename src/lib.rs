@@ -120,7 +120,7 @@ impl TestResult {
         let issue_number = file_name.split(|ch: char| !ch.is_ascii_digit()).next()?;
 
         Some(format!(
-            "https://github.com/TEST/rust/issues/{}",
+            "https://github.com/rust-lang/rust/issues/{}",
             issue_number
         ))
     }
