@@ -8,4 +8,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-      - run: cargo run
+
+      - name: cargo run glacier
+        run: cargo run
+
+      - name: cargo check autofix
+        run: cargo check -p autofix
