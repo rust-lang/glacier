@@ -2,7 +2,7 @@
 
 A big ‘ol pile of ICE.
 
-[![Build Status](https://github.com/rust-lang/glacier/workflows/.github/workflows/main.yml/badge.svg)](https://github.com/rust-lang/glacier/actions)
+[![Build Status](https://github.com/rust-lang/glacier/workflows/Continuous%20Integration/badge.svg)](https://github.com/rust-lang/glacier/actions)
 
 This repository is used to test internal compiler errors (also known as ICEs)
 in [Rust]. An ICE means that something went wrong, something unexpected. As
