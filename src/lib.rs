@@ -148,7 +148,7 @@ fn discover(dir: &str) -> Result<Vec<ICE>, Box<dyn Error>> {
             .file_name()
             .and_then(|n| n.to_str())
             .unwrap_or("")
-            .starts_with(".")
+            .starts_with('.')
         {
             continue;
         }
