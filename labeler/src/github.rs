@@ -1,4 +1,5 @@
 use once_cell::sync::Lazy;
+use regex::Regex;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::env::{var, VarError};
@@ -46,14 +47,59 @@ pub(crate) fn get_labeled_issues(
         label_name
     );
 
-    let issue: Vec<Issue> = CLIENT
+    let mut issues: Vec<Issue> = CLIENT
         .get(&url)
         .bearer_auth(&config.token)
         .send()?
         .error_for_status()?
         .json()?;
 
-    Ok(issue)
+    let pages = get_result_length(&config, &url).unwrap();
+
+    if pages > 1 {
+        for i in 2..=pages {
+            let url = format!(
+                "https://api.github.com/repos/rust-lang/rust/issues?labels={}&page={}",
+                label_name, i
+            );
+            let mut paged_issues: Vec<Issue> = CLIENT
+                .get(&url)
+                .bearer_auth(&config.token)
+                .send()?
+                .error_for_status()?
+                .json()?;
+
+            issues.append(&mut paged_issues);
+        }
+    }
+
+    Ok(issues)
+}
+
+fn get_result_length(config: &Config, url: &str) -> Result<usize, Box<dyn std::error::Error>> {
+    let res = CLIENT.get(url).bearer_auth(&config.token).send()?;
+
+    if res.status().is_success() {
+        if let Some(link) = res.headers().get("Link") {
+            let link_string = String::from_utf8(link.as_bytes().to_vec()).unwrap();
+            let re_last_page = Regex::new(r#"page=[0-9]+>; rel="last""#).unwrap();
+            let re_page_number = Regex::new(r"[0-9]+").unwrap();
+            let last_page = re_last_page
+                .captures(&link_string)
+                .unwrap()
+                .get(0)
+                .unwrap()
+                .as_str();
+            let page_number = re_page_number.captures(&last_page).unwrap();
+            let pages: usize = page_number.get(0).unwrap().as_str().parse().unwrap();
+
+            Ok(pages)
+        } else {
+            Ok(0)
+        }
+    } else {
+        Ok(0)
+    }
 }
 
 #[derive(Serialize, Debug)]
