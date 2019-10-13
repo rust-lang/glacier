@@ -1,4 +1,5 @@
 #![feature(const_generics)]
+#![feature(const_compare_raw_pointers)]
 
 use std::mem::transmute;
 
