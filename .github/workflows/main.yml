@@ -14,3 +14,6 @@ jobs:
 
       - name: cargo check autofix
         run: cargo check -p autofix
+
+      - name: cargo check labeler
+        run: cargo check -p labeler

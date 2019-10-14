@@ -1,0 +1,18 @@
+name: Add label to tested issue
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Cargo run labeler
+      run: cargo run -p labeler
+      env:
+        LABEL_TOKEN: ${{ secrets.LABEL_TOKEN }}
