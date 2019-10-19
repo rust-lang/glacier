@@ -9,6 +9,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: set rustup profile
+        run: |
+          rustup self update
+          rustup set profile minimal
+
       - name: cargo run glacier
         run: cargo run
 
