@@ -2,27 +2,34 @@ use crate::github::{self, pull_request, PullRequestOptions};
 use git2::{PushOptions, RemoteCallbacks, Repository, Tree};
 use glacier::TestResult;
 use std::error::Error;
+use std::fs::read_to_string;
 use std::path::{Path, PathBuf};
 
 const FIXED_DIR: &str = "fixed";
 
+#[derive(Debug)]
 struct Descriptions {
     commit_message: String,
     pr_title: String,
     pr_body: String,
 }
 
-fn format_descriptions(test: &TestResult) -> Option<Descriptions> {
+fn format_descriptions(test: &TestResult) -> Result<Descriptions, Box<dyn Error>> {
     let title = test.title();
-    let description = test.description()?;
+    let description = test.description().unwrap();
 
     let commit_message = format!("{}\n\n{}\n", title, description);
 
-    let issue = format!("Issue: {}", test.issue_url()?);
-    let description_codeblock = format!("```\n{}\n```", description);
-    let pr_body = format!("{}\n\n{}\n", issue, description_codeblock);
+    let file = read_to_string(test.path())?;
+    let syntax = test.syntax();
 
-    Some(Descriptions {
+    let issue = format!("Issue: {}", test.issue_url());
+    let file_codeblock = format!("```{}\n{}\n```", syntax, file);
+    let description_codeblock = format!("```\n{}\n```", description);
+
+    let pr_body = format!("{}\n{}\n{}\n", issue, file_codeblock, description_codeblock);
+
+    Ok(Descriptions {
         commit_message,
         pr_title: title,
         pr_body,
@@ -90,7 +97,7 @@ pub(crate) fn fix(test: &TestResult, config: &github::Config) -> Result<(), Box<
         return Ok(());
     }
 
-    let descriptions = format_descriptions(test).ok_or("Failed to format Descriptions")?;
+    let descriptions = format_descriptions(test)?;
 
     let head = repo.head()?.peel_to_commit()?;
     let sig = repo.signature()?;
