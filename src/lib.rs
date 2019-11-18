@@ -114,15 +114,22 @@ impl TestResult {
         }
     }
 
-    pub fn issue_url(&self) -> Option<String> {
-        let file_name = self.path().file_name()?.to_str()?;
+    pub fn issue_url(&self) -> String {
+        let file_name = self.path().file_name().unwrap().to_str().unwrap();
 
-        let issue_number = file_name.split(|ch: char| !ch.is_ascii_digit()).next()?;
+        let issue_number = file_name
+            .split(|ch: char| !ch.is_ascii_digit())
+            .next()
+            .unwrap();
 
-        Some(format!(
-            "https://github.com/rust-lang/rust/issues/{}",
-            issue_number
-        ))
+        format!("https://github.com/rust-lang/rust/issues/{}", issue_number)
+    }
+
+    pub fn syntax(&self) -> &'static str {
+        match self.ice.mode {
+            TestMode::ShellScript => "bash",
+            TestMode::SingleFile => "rust",
+        }
     }
 }
 
