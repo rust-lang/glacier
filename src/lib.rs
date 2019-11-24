@@ -36,6 +36,7 @@ impl ICE {
         let workdir = tempfile::tempdir()?;
         let output = match self.mode {
             TestMode::SingleFile => Command::new(RUSTC)
+                .args(&["--edition", "2018"])
                 .arg(std::fs::canonicalize(&self.path)?)
                 .current_dir(workdir.path())
                 .output()?,
