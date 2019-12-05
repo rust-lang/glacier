@@ -16,6 +16,4 @@ impl<const X: usize> ArrayHolder<{X}> {
     }
 }
 
-fn main() {
-    let mut array = ArrayHolder::new();
-}
+fn main() {}
