@@ -11,9 +11,9 @@ jobs:
     if: github.repository == 'rust-lang/glacier'
 
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
-    - name: Cargo run labeler
-      run: cargo run -p labeler
-      env:
-        LABEL_TOKEN: ${{ secrets.LABEL_TOKEN }}
+      - name: Cargo run labeler
+        run: cargo run -p labeler
+        env:
+          LABEL_TOKEN: ${{ secrets.LABEL_TOKEN }}

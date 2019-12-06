@@ -2,7 +2,7 @@ name: Autofix
 
 on:
   schedule:
-  - cron: '0 12 * * *'
+    - cron: "0 12 * * *"
 
 jobs:
   build:
@@ -10,11 +10,13 @@ jobs:
     if: github.repository == 'rust-lang/glacier'
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Configure Git
-      run: |
-        git config --global user.name "rustbot"
-        git config --global user.email "rustbot@users.noreply.github.com"
-    - run: cargo run -p autofix
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v1
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "rustbot"
+          git config --global user.email "rustbot@users.noreply.github.com"
+
+      - run: cargo run -p autofix
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
