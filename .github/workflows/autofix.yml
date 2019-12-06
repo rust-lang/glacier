@@ -17,6 +17,11 @@ jobs:
           git config --global user.name "rustbot"
           git config --global user.email "rustbot@users.noreply.github.com"
 
+      - name: Configure rustup
+        run: |
+          rustup set profile minimal
+          rustup toolchain install nightly
+
       - run: cargo run -p autofix
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
