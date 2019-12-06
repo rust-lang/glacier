@@ -8,6 +8,7 @@ pub use rayon;
 
 static RUSTC: &str = "rustc";
 static ICES_PATH: &str = "ices";
+static SHELL: &str = "bash";
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
 enum TestMode {
@@ -40,7 +41,8 @@ impl ICE {
                 .arg(std::fs::canonicalize(&self.path)?)
                 .current_dir(workdir.path())
                 .output()?,
-            TestMode::ShellScript => Command::new(std::fs::canonicalize(&self.path)?)
+            TestMode::ShellScript => Command::new(SHELL)
+                .arg(std::fs::canonicalize(&self.path)?)
                 .current_dir(workdir.path())
                 .output()?,
         };
