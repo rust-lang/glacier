@@ -1,6 +1,6 @@
 #![feature(const_generics)]
 
-use std::mem::MaybeUninit;
+use std::mem::{self, MaybeUninit};
 
 #[repr(transparent)]
 pub struct Vector<T, const N: usize>([T; N]);
