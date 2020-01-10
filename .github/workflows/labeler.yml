@@ -13,6 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - name: Configure rustup
+        run: |
+          rustup set profile minimal
+          rustup toolchain install nightly
+
       - name: Cargo run labeler
         run: cargo run -p labeler
         env:
