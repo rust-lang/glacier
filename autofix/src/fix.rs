@@ -1,7 +1,7 @@
 use crate::github::{self, pull_request, PullRequestOptions};
+use anyhow::{Context, Result};
 use git2::{PushOptions, RemoteCallbacks, Repository, Tree};
 use glacier::TestResult;
-use std::error::Error;
 use std::fs::read_to_string;
 use std::path::{Path, PathBuf};
 
@@ -14,7 +14,7 @@ struct Descriptions {
     pr_body: String,
 }
 
-fn format_descriptions(test: &TestResult) -> Result<Descriptions, Box<dyn Error>> {
+fn format_descriptions(test: &TestResult) -> Result<Descriptions> {
     let title = test.title();
     let description = test.description().unwrap();
 
@@ -44,18 +44,18 @@ fn new_path_bytes(old: &Path) -> Option<Vec<u8>> {
     Some(new.to_str()?.as_bytes().to_vec())
 }
 
-fn move_to_fixed<'a>(repo: &'a Repository, test: &TestResult) -> Result<Tree<'a>, Box<dyn Error>> {
+fn move_to_fixed<'a>(repo: &'a Repository, test: &TestResult) -> Result<Tree<'a>> {
     let mut index = repo.index()?;
 
     // Stage 0 = normal file, not part of a merge
     let mut entry = index
         .get_path(test.path(), 0)
-        .ok_or_else(|| format!("not found in index: {}", test.path().display()))?;
+        .with_context(|| format!("not found in index: {}", test.path().display()))?;
 
     index.remove(test.path(), 0)?;
 
     let new_path =
-        new_path_bytes(test.path()).ok_or_else(|| format!("ICE has no filename: {:?}", test))?;
+        new_path_bytes(test.path()).with_context(|| format!("ICE has no filename: {:?}", test))?;
 
     entry.path = new_path;
 
@@ -66,7 +66,7 @@ fn move_to_fixed<'a>(repo: &'a Repository, test: &TestResult) -> Result<Tree<'a>
     Ok(repo.find_tree(id)?)
 }
 
-fn push(repo: &Repository, refspec: &str, config: &github::Config) -> Result<(), Box<dyn Error>> {
+fn push(repo: &Repository, refspec: &str, config: &github::Config) -> Result<()> {
     let mut callbacks = RemoteCallbacks::new();
 
     callbacks.push_update_reference(|_ref, status| match status {
@@ -85,7 +85,7 @@ fn push(repo: &Repository, refspec: &str, config: &github::Config) -> Result<(),
     Ok(())
 }
 
-pub(crate) fn fix(test: &TestResult, config: &github::Config) -> Result<(), Box<dyn Error>> {
+pub(crate) fn fix(test: &TestResult, config: &github::Config) -> Result<()> {
     let repo = Repository::open(".")?;
 
     let path = test.path().display();

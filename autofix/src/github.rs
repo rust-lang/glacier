@@ -1,7 +1,8 @@
+use anyhow::Result;
 use once_cell::sync::Lazy;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
-use std::env::{var, VarError};
+use std::env::var;
 
 static CLIENT: Lazy<Client> = Lazy::new(Client::new);
 
@@ -11,7 +12,7 @@ pub(crate) struct Config {
 }
 
 impl Config {
-    pub(crate) fn from_env() -> Result<Self, VarError> {
+    pub(crate) fn from_env() -> Result<Self> {
         Ok(Self {
             token: var("GITHUB_TOKEN")?,
             repo: var("GITHUB_REPOSITORY")?,
@@ -40,10 +41,7 @@ struct PullRequest {
     html_url: String,
 }
 
-pub(crate) fn pull_request(
-    config: &Config,
-    options: &PullRequestOptions,
-) -> Result<String, reqwest::Error> {
+pub(crate) fn pull_request(config: &Config, options: &PullRequestOptions) -> Result<String> {
     let url = format!("https://api.github.com/repos/{}/pulls", config.repo);
 
     let pr: PullRequest = CLIENT
