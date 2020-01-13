@@ -111,7 +111,7 @@ impl TestResult {
             out.push_str(self.stderr());
             out.push_str("==============");
 
-            Some(out)
+            Some(out.replace('\0', "NUL"))
         } else {
             None
         }
