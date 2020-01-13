@@ -1,10 +1,10 @@
+use anyhow::{bail, Result};
 use glacier::Outcome;
 use rayon::prelude::*;
-use std::error::Error;
 
-fn main() -> Result<(), Box<dyn Error>> {
+fn main() -> Result<()> {
     let failed = glacier::test_all()?
-        .map(|res| -> Result<bool, String> {
+        .map(|res| -> Result<bool> {
             let result = res?;
             println!("{}", result);
 
@@ -13,7 +13,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         .try_reduce(|| false, |a, b| Ok(a || b))?;
 
     if failed {
-        Err("some ICEs are now fixed!".into())
+        bail!("some ICEs are now fixed!");
     } else {
         Ok(())
     }

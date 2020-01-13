@@ -1,5 +1,5 @@
+use anyhow::{bail, Result};
 use rayon::prelude::*;
-use std::error::Error;
 use std::fmt;
 use std::path::{Path, PathBuf};
 use std::process::Command;
@@ -23,17 +23,17 @@ struct ICE {
 }
 
 impl ICE {
-    fn from_path(path: PathBuf) -> Result<Self, Box<dyn Error>> {
+    fn from_path(path: PathBuf) -> Result<Self> {
         let mode = match path.extension().and_then(|e| e.to_str()) {
             Some("rs") => TestMode::SingleFile,
             Some("sh") => TestMode::ShellScript,
-            _ => return Err(format!("unknown ICE test extension: {}", path.display()).into()),
+            _ => bail!("unknown ICE test extension: {}", path.display()),
         };
 
         Ok(Self { path, mode })
     }
 
-    fn test(self) -> Result<TestResult, Box<dyn Error>> {
+    fn test(self) -> Result<TestResult> {
         let workdir = tempfile::tempdir()?;
         let output = match self.mode {
             TestMode::SingleFile => Command::new(RUSTC)
@@ -148,7 +148,7 @@ impl fmt::Display for TestResult {
     }
 }
 
-fn discover(dir: &str) -> Result<Vec<ICE>, Box<dyn Error>> {
+fn discover(dir: &str) -> Result<Vec<ICE>> {
     let mut ices = Vec::new();
     for entry in std::fs::read_dir(dir)? {
         let entry = entry?;
@@ -167,12 +167,8 @@ fn discover(dir: &str) -> Result<Vec<ICE>, Box<dyn Error>> {
     Ok(ices)
 }
 
-pub fn test_all() -> Result<impl IndexedParallelIterator<Item = Result<TestResult, String>>, String>
-{
-    let iter = discover(ICES_PATH)
-        .map_err(|e| e.to_string())?
-        .into_par_iter()
-        .map(|ice| ice.test().map_err(|e| e.to_string()));
+pub fn test_all() -> Result<impl IndexedParallelIterator<Item = Result<TestResult>>> {
+    let iter = discover(ICES_PATH)?.into_par_iter().map(|ice| ice.test());
 
     Ok(iter)
 }
