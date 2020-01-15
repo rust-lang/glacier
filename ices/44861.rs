@@ -1,10 +1,8 @@
-#!/bin/bash
+// https://github.com/rust-lang/rust/issues/44861
+// Playground: https://play.rust-lang.org/?version=nightly&mode=debug&edition=2018&gist=bdd59503a0dc2d33c60a949fc7c57633
+// You need to select `build` instead of `run`.
 
-# https://github.com/rust-lang/rust/issues/44861
-# Playground: https://play.rust-lang.org/?version=nightly&mode=debug&edition=2018&gist=bdd59503a0dc2d33c60a949fc7c57633
-# You need to select `build` instead of `run`.
-rustc --crate-type lib - << END
-
+#![crate_type = "lib"]
 #![feature(specialization)]
 #![feature(unsize, coerce_unsized)]
 
@@ -43,5 +41,3 @@ impl<U: Smartass+?Sized, T: Smartass+?Sized> CoerceUnsized<SmartassPtr<T>> for S
 pub fn conv(s: SmartassPtr<()>) -> SmartassPtr<MaybeObjectSafe> {
     s
 }
-
-END
