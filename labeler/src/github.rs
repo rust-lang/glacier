@@ -1,6 +1,6 @@
 use once_cell::sync::Lazy;
 use regex::Regex;
-use reqwest::Client;
+use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 use std::env::{var, VarError};
 
