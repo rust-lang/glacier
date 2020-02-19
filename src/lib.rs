@@ -166,6 +166,11 @@ fn discover(dir: &str) -> Result<Vec<ICE>> {
         }
         ices.push(ICE::from_path(entry.path())?);
     }
+
+    ices.sort_unstable_by(|a, b| {
+        alphanumeric_sort::compare_os_str(&a.path.as_os_str(), &b.path.as_os_str())
+    });
+
     Ok(ices)
 }
 

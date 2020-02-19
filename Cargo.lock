@@ -10,6 +10,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "alphanumeric-sort"
+version = "1.0.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f37ce94154d73f6961f87571a3ab7814e1608f373bd55a933e3e771b6dd59fc4"
+
+[[package]]
 name = "anyhow"
 version = "1.0.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -270,6 +276,7 @@ dependencies = [
 name = "glacier"
 version = "0.1.0"
 dependencies = [
+ "alphanumeric-sort",
  "anyhow",
  "rayon",
  "tempfile",
