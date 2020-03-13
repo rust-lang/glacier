@@ -1,10 +1,15 @@
 use anyhow::Result;
 use once_cell::sync::Lazy;
-use reqwest::Client;
+use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
 use std::env::var;
 
-static CLIENT: Lazy<Client> = Lazy::new(Client::new);
+static CLIENT: Lazy<Client> = Lazy::new(|| {
+    Client::builder()
+        .user_agent("rust-lang/glacier")
+        .build()
+        .unwrap()
+});
 
 pub(crate) struct Config {
     token: String,
