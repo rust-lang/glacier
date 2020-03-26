@@ -37,7 +37,7 @@ impl <'a, T: Clone, const N: usize> Iterator for ArrayWindows<'a, T, {N}> {
 const FOUR: usize = 4;
 
 fn main() {
-    let v = vec![100; 0usize];
+    let v: Vec<usize> = vec![100; 0usize];
     
     for array in v.as_slice().array_windows::<{FOUR}>() {
        // println!("{:?}", array);
