@@ -51,6 +51,8 @@ impl ICE {
             outcome: match output.status.code() {
                 Some(0) => Outcome::NoError,
                 Some(101) => Outcome::ICEd, // An ICE will cause an error code of 101
+                // Bash uses 128+N for processes terminated by signal N
+                Some(x) if x > 128 => Outcome::ICEd,
                 Some(_) => Outcome::Errored,
                 None => Outcome::ICEd, // If rustc receives a signal treat is as an ICE
             },
