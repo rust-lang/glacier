@@ -1,9 +1,9 @@
-#![feature(asm)]
+#![feature(llvm_asm)]
 
 extern "C" fn foo() { }
 
 fn main() {
     unsafe {
-        asm!("callq $0" :: "s"(foo) :: "volatile");
+        llvm_asm!("callq $0" :: "s"(foo) :: "volatile");
     }
 }

@@ -1,11 +1,11 @@
-#![feature(asm)]
+#![feature(llvm_asm)]
 
 extern "C" fn foo() { }
 
 fn main() {
     let x: usize;
     unsafe {
-        asm!("movq $1, $0" : "=r"(x) : "r"(foo));
+        llvm_asm!("movq $1, $0" : "=r"(x) : "r"(foo));
     }
     assert!(x != 0);
 }

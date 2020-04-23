@@ -1,4 +1,4 @@
-#![feature(asm)]
+#![feature(llvm_asm)]
 
 fn main()
 {
@@ -12,7 +12,7 @@ pub fn read_after_raising_any_exceptions() -> u16
 	{
 		// See <https://github.com/HJLebbink/asm-dude/wiki/FSTCW_FNSTCW>.
 		let mut control_word: u16;
-		asm!
+		llvm_asm!
 		(
 			"fstcw $0"
 			:

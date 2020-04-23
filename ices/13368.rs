@@ -1,7 +1,7 @@
-#![feature(asm)]
+#![feature(llvm_asm)]
 
 fn main() {
     let arr: [u8; 16];
-    unsafe { asm!("" : "=m"(arr)); }
+    unsafe { llvm_asm!("" : "=m"(arr)); }
     println!("{:?}", arr);
 }

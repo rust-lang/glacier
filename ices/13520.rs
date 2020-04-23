@@ -1,9 +1,9 @@
-#![feature(asm)]
+#![feature(llvm_asm)]
 
 fn main() {
     let x = ();
     unsafe {
         let p: *const () = &x;
-        asm!("" :: "r"(*p));
+        llvm_asm!("" :: "r"(*p));
     }
 }
