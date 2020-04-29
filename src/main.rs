@@ -20,7 +20,9 @@ fn main() -> Result<()> {
     }
 
     match failed.len() {
-        0 => Ok(()),
+        0 => eprintln!("Finished: No fixed ICEs"),
         len => bail!("{} ICEs are now fixed!", len)
     }
+
+    Ok(())
 }
