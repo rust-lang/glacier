@@ -1,20 +1,26 @@
 use anyhow::{bail, Result};
-use glacier::Outcome;
+use glacier::{TestResult, Outcome};
 use rayon::prelude::*;
 
 fn main() -> Result<()> {
     let failed = glacier::test_all()?
-        .map(|res| -> Result<bool> {
-            let result = res?;
-            println!("{}", result);
+        .filter(|res| {
+            if let Ok(test) = res {
+                eprint!("{}", test.outcome_token());
 
-            Ok(result.outcome() != Outcome::ICEd)
+                test.outcome() != Outcome::ICEd
+            } else {
+                true
+            }
         })
-        .try_reduce(|| false, |a, b| Ok(a || b))?;
+        .collect::<Result<Vec<TestResult>, _>>()?;
 
-    if failed {
-        bail!("some ICEs are now fixed!");
-    } else {
-        Ok(())
+    for result in &failed {
+        eprintln!("\n{}", result);
+    }
+
+    match failed.len() {
+        0 => Ok(()),
+        len => bail!("{} ICEs are now fixed!", len)
     }
 }

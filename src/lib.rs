@@ -119,6 +119,14 @@ impl TestResult {
         }
     }
 
+    pub fn outcome_token(&self) -> char {
+        match self.outcome {
+            Outcome::ICEd => '.',
+            Outcome::Errored => 'E',
+            Outcome::NoError => 'N',
+        }
+    }
+
     pub fn issue_url(&self) -> String {
         let file_name = self.path().file_name().unwrap().to_str().unwrap();
 
