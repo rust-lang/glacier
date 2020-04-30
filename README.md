@@ -12,7 +12,7 @@ the odd code path, even if the point of the change wasn’t to fix the bug.
 [Rust]: https://github.com/rust-lang/rust
 
 As such, this repository is a collection of these bugs, and it runs on Rust
-nightly, once a day, on Travis. If any of the ICEs stop happening, the build
+nightly, once a day, through GitHub Actions. If any of the ICEs stop happening, the build
 will fail, and I can close the associated bug.
 
 ## Helping out
