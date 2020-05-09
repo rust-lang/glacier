@@ -26,6 +26,9 @@ Contributing to Glacier is fairly easy:
 5. (optional) Verify it works by running `cargo run` to run the tests.
 6. Send a pull request!
 
+Note: Running this on Windows may give false positives and report some ICEs as fixed,
+use either WSL or Linux for better accuracy.
+
 [ices]: https://github.com/rust-lang/rust/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aopen+label%3AI-ICE+-label%3Aglacier
 
 ## License
