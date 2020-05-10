@@ -1,7 +1,11 @@
+#[cfg(not(windows))]
 use anyhow::{bail, Result};
-use glacier::{TestResult, Outcome};
+#[cfg(not(windows))]
+use glacier::{Outcome, TestResult};
+#[cfg(not(windows))]
 use rayon::prelude::*;
 
+#[cfg(not(windows))]
 fn main() -> Result<()> {
     let failed = glacier::test_all()?
         .filter(|res| {
@@ -21,8 +25,15 @@ fn main() -> Result<()> {
 
     match failed.len() {
         0 => eprintln!("\nFinished: No fixed ICEs"),
-        len => bail!("{} ICEs are now fixed!", len)
+        len => bail!("{} ICEs are now fixed!", len),
     }
 
     Ok(())
+}
+
+#[cfg(windows)]
+fn main() {
+    println!(
+        "We don't expect to run glacier on Windows. Please use WSL or *nix environment instead."
+    );
 }
