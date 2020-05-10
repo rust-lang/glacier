@@ -38,7 +38,7 @@ EOF
 
 rm -f main.rs
 
-mkdir lib
+mkdir -p lib/src
 
 cat > lib/Cargo.toml <<EOF
 [package]
@@ -50,8 +50,6 @@ edition = "2018"
 [dependencies]
 ndarray = "=0.13.1"
 EOF
-
-mkdir lib/src
 
 cat > lib/src/lib.rs <<EOF
 #![allow(deprecated)]
@@ -83,8 +81,6 @@ impl GlobalLpPool {
     }
 }
 EOF
-
-mkdir src
 
 cat > src/main.rs <<EOF
 fn main() {
