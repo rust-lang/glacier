@@ -38,9 +38,9 @@ EOF
 
 rm -f main.rs
 
-mkdir lib && cd lib
+mkdir lib
 
-cat > Cargo.toml <<EOF
+cat > lib/Cargo.toml <<EOF
 [package]
 name = "lib"
 version = "0.1.0"
@@ -51,9 +51,9 @@ edition = "2018"
 ndarray = "=0.13.1"
 EOF
 
-mkdir src && cd src
+mkdir lib/src
 
-cat > lib.rs <<EOF
+cat > lib/src/lib.rs <<EOF
 #![allow(deprecated)]
 
 use ndarray::*;
@@ -84,11 +84,9 @@ impl GlobalLpPool {
 }
 EOF
 
-cd ../..
+mkdir src
 
-mkdir src && cd src
-
-cat > main.rs <<EOF
+cat > src/main.rs <<EOF
 fn main() {
     let op = lib::GlobalLpPool::default();
     let result = op.eval(vec![1.0f64, 2.0]);
