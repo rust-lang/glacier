@@ -1,25 +1,8 @@
 #!/bin/bash
 
-tmp="$(mktemp -d)"
-
-if [[ ! $tmp || ! -d $tmp ]]
-then
-    echo "Could not create temporary directory"
-    exit 1
-fi
-
-cleanup() {
-    rm -r "$tmp"
-}
-
-trap cleanup EXIT
-
-cd "$tmp"
-
 cargo new bug-rust-71506 && cd bug-rust-71506
 
 cat > Cargo.toml <<EOF
-
 [package]
 name = "bug-rust-71506"
 version = "0.1.0"
@@ -35,8 +18,6 @@ lib = { path = "lib" }
 [profile.release]
 lto = true
 EOF
-
-rm -f main.rs
 
 mkdir -p lib/src
 
@@ -90,6 +71,4 @@ fn main() {
 }
 EOF
 
-cd ..
-
-cargo build --release
+cargo build --release --target aarch64-unknown-linux-gnu
