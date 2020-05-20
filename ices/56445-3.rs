@@ -1,3 +1,5 @@
+#![crate_type = "lib"]
+
 pub struct Memory<'rom> {
     rom: &'rom [u8],
     ram: [u8; Self::SIZE],
