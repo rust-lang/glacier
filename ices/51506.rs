@@ -27,11 +27,15 @@ impl Trait for X {
     }
 }
 
-fn main() {
-    if let Some(iter) = 1.f() { // replacing 1 by X makes the code compiles and runs fine
+fn f<T: Trait>(a: T) {
+    if let Some(iter) = a.f() {
         println!("Some");
         for x in iter {
             println!("x = {}", x);
         }
     }
+}
+
+pub fn main() {
+    f(10);
 }
