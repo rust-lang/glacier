@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc -C embed-bitcode=no -C debuginfo=2 -C incremental --crate-type bin - << EOF
+rustc -C embed-bitcode=no -C debuginfo=2 --crate-type bin - << EOF
 
 pub struct Thing;
 
