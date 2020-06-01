@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc --emit=mir --edition 2018 - << EOF
+rustc --emit=mir - << EOF
 
 fn main() {}
 
