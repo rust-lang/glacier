@@ -1,3 +1,7 @@
+#!/bin/bash
+
+rustc -C embed-bitcode=no -C debuginfo=2 -C incremental --crate-type bin - << EOF
+
 pub struct Thing;
 
 impl Thing {
@@ -16,3 +20,5 @@ fn main() {
     // Don't bother to block_on to avoid dependency on futures
     let _ = async_main();
 }
+
+EOF

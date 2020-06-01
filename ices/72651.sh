@@ -1,3 +1,7 @@
+#!/bin/bash
+
+rustc --emit=mir - << EOF
+
 fn main() {}
 
 struct StructA {}
@@ -19,3 +23,5 @@ async fn ice() {
         _ => {}
     }
 }
+
+EOF
