@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 rustc --emit mir -Z mir-opt-level=2 - <<EOF
 // build-pass

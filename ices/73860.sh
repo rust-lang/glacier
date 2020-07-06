@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 rustc -Zvalidate-mir - << EOF
 fn main() {

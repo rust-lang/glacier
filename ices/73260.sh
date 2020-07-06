@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 rustc -Z save-analysis - << EOF
 #![feature(const_generics)]
