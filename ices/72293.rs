@@ -1,4 +1,4 @@
-#![feature(const_generics, const_transmute)]
+#![feature(const_generics)]
 
 struct Const<const P: &'static ()>;
 
