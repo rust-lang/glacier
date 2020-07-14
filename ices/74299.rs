@@ -1,16 +1,23 @@
-#![feature(type_alias_impl_trait)]
+#![feature(specialization)]
 
-type X<T> = impl Sized;
+trait X {
+    type U;
+    fn f(&self) -> Self::U {
+        loop {}
+    }
+}
 
-fn f<T>() -> X<T> {}
+impl<T> X for T {
+    default type U = ();
+}
 
 trait Y {
     fn g(&self) {}
 }
 
-impl Y for X<()> {}
-impl Y for X<i32> {}
+impl Y for <() as X>::U {}
+impl Y for <i32 as X>::U {}
 
 fn main() {
-    f::<()>().g();
+    ().f().g();
 }
