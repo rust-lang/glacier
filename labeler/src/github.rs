@@ -48,7 +48,7 @@ pub(crate) fn get_labeled_issues(
     label_name: String,
 ) -> Result<Vec<Issue>, reqwest::Error> {
     let url = format!(
-        "https://api.github.com/repos/rust-lang/rust/issues?labels={}",
+        "https://api.github.com/repos/rust-lang/rust/issues?labels={}&state=all",
         label_name
     );
 
@@ -64,7 +64,7 @@ pub(crate) fn get_labeled_issues(
     if pages > 1 {
         for i in 2..=pages {
             let url = format!(
-                "https://api.github.com/repos/rust-lang/rust/issues?labels={}&page={}",
+                "https://api.github.com/repos/rust-lang/rust/issues?labels={}&state=all&page={}",
                 label_name, i
             );
             let mut paged_issues: Vec<Issue> = CLIENT
