@@ -8,5 +8,3 @@ async fn test() -> Box<dyn std::error::Error> {
 fn main() {}
 
 EOF
-
-
