@@ -1,4 +1,4 @@
-#![feature(unsized_locals)]
+#![feature(unsized_fn_params)]
 
 fn main() {
     let f: fn([u8]) = |_| {};
