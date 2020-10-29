@@ -1,4 +1,4 @@
-#![feature(unsized_locals)]
+#![feature(unsized_fn_params, unsized_locals)]
 #![crate_type = "lib"]
 
 use std::future::Future;
