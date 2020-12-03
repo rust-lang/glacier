@@ -11,7 +11,7 @@ fn issue_list() -> Vec<usize> {
         let caps = re.captures(&file_name).unwrap();
         issue_list.push(caps.get(0).unwrap().as_str().parse().unwrap());
     }
-    issue_list.sort();
+    issue_list.sort_unstable();
     issue_list.dedup();
 
     issue_list
