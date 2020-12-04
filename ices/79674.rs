@@ -13,7 +13,7 @@ impl<T> MiniTypeId for T {
 enum Lift<const V: bool> {}
 
 trait IsFalse {}
-impl IsFalse for Lift<false> {} 
+impl IsFalse for Lift<false> {}
 
 const fn is_same_type<T: MiniTypeId, U: MiniTypeId>() -> bool {
     T::TYPE_ID == U::TYPE_ID
