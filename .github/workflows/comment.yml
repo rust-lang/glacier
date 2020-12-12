@@ -1,0 +1,29 @@
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Get issue numbers
+        run: |
+          git diff origin/${GITHUB_BASE_REF}..origin/${GITHUB_HEAD_REF} \
+            --diff-filter=AM \
+            --name-only -- ices | grep -o '[0-9]*' >> comments
+          sed -i 's/^/- github.com\/rust-lang\/rust\/issues\/ /g' comments
+          sed -i -z 's/\n/\\n/g' comments
+
+      - name: Post issue numbers
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: ${{ github.event.pull_request.comments_url }}
+        run: |
+          curl -X POST \
+              -H "Authorization: token ${GITHUB_TOKEN}" \
+              -d "{\"body\": \"$(cat comments)\"}" \
+              ${URL}
