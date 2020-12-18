@@ -6,3 +6,5 @@ pub struct Struct(ExternCallback);
 pub extern "C" fn register_something(bind: ExternCallback) -> Struct {
     Struct(bind)
 }
+
+fn main() {}
