@@ -1,6 +1,7 @@
 #!/bin/bash
 
-rustc -C embed-bitcode=no -C codegen-units=1 -C debuginfo=2 --crate-type lib - << 'EOF'
+rustc - << 'EOF'
+#![crate_type = "lib"]
 trait ParseError {
     type StreamError;
 }
