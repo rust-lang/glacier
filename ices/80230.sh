@@ -5,6 +5,6 @@ rustc -Zchalk - <<'EOF'
 
 #![feature(generic_associated_types)]
 trait Foo {
-  type PublicKey<'a> : From<&'a [u8]>;
+    type PublicKey<'a> : From<&'a [u8]>;
 }
 EOF
