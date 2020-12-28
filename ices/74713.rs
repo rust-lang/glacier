@@ -1,3 +1,5 @@
+#![feature(const_generics)]
+
 fn bug<'a>()
 where
     [(); {
