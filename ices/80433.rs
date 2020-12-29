@@ -1,34 +1,22 @@
 #![allow(incomplete_features)]
 #![feature(generic_associated_types)]
 
-#[derive(Default)]
-struct E<T> {
-    data: T,
-}
+struct E {}
 
 trait TestMut {
     type Output<'a>;
-    fn test_mut<'a>(&'a mut self) -> Self::Output<'a>;
+    fn test_mut(&mut self) -> Self::Output<'static>;
 }
 
-impl<T> TestMut for E<T>
-where
-    T: 'static,
-{
-    type Output<'a> = &'a mut T;
-    fn test_mut<'a>(&'a mut self) -> Self::Output<'a> {
-        &mut self.data
+impl TestMut for E {
+    type Output<'a> = usize;
+    fn test_mut(&mut self) -> Self::Output<'static> {
+        todo!()
     }
 }
 
-fn test_simpler<'a>(dst: &'a mut impl TestMut<Output = &'a mut f32>)
-{
-    for n in 0i16..100 {
-        *dst.test_mut() = n.into();
-    }
-}
+fn test_simpler(_: impl TestMut<Output = usize>) {}
 
 fn main() {
-    let mut t1: E<f32> = Default::default();
-    test_simpler(&mut t1);
+    test_simpler(E {});
 }
