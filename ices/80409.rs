@@ -5,18 +5,17 @@ struct FsmBuilder<TFsm> {
 }
 
 impl<TFsm> FsmBuilder<TFsm> {
-	fn state(&mut self) -> FsmStateBuilder<TFsm> {
-    	todo!()
-	}
+    fn state(&mut self) -> FsmStateBuilder<TFsm> {
+        todo!()
+    }
 }
 
-
 struct FsmStateBuilder<TFsm> {
-	_state: PhantomData<TFsm>,
+    _state: PhantomData<TFsm>,
 }
 
 impl<TFsm> FsmStateBuilder<TFsm> {
-	fn on_entry<TAction: Fn(&mut StateContext<'_, TFsm>)>(&self, _action: TAction) {}
+    fn on_entry<TAction: Fn(&mut StateContext<'_, TFsm>)>(&self, _action: TAction) {}
 }
 
 trait Fsm {
@@ -24,7 +23,7 @@ trait Fsm {
 }
 
 struct StateContext<'a, TFsm: Fsm> {
-    context: &'a mut TFsm::Context
+    context: &'a mut TFsm::Context,
 }
 
 fn main() {
