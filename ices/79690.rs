@@ -3,14 +3,14 @@ union Transmute<T: Copy, U: Copy> {
     u: U,
 }
 trait Bar {
-    fn bar(&self) -> u32;
+    fn bar(&self) -> bool;
 }
 struct Foo {
-    foo: u32,
+    foo: bool,
     bar: bool,
 }
 impl Bar for Foo {
-    fn bar(&self) -> u32 {
+    fn bar(&self) -> bool {
         self.foo
     }
 }
@@ -20,7 +20,7 @@ struct VTable {
     size: Foo,
 }
 const FOO: &Bar = &Foo {
-    foo: 128,
+    foo: true,
     bar: false,
 };
 const G: Fat = unsafe { Transmute { t: FOO }.u };
