@@ -46,9 +46,14 @@ impl ICE {
                 .current_dir(workdir.path())
                 .output()?,
         };
+
+        let stdout = String::from_utf8_lossy(&output.stdout).to_string();
+        let stderr = String::from_utf8_lossy(&output.stderr).to_string();
+
         Ok(TestResult {
             ice: self,
             outcome: match output.status.code() {
+                _ if stderr.contains("error: internal compiler error") => Outcome::ICEd,
                 Some(0) => Outcome::NoError,
                 Some(101) => Outcome::ICEd, // An ICE will cause an error code of 101
                 // Bash uses 128+N for processes terminated by signal N
@@ -56,8 +61,8 @@ impl ICE {
                 Some(_) => Outcome::Errored,
                 None => Outcome::ICEd, // If rustc receives a signal treat is as an ICE
             },
-            stdout: String::from_utf8_lossy(&output.stdout).to_string(),
-            stderr: String::from_utf8_lossy(&output.stderr).to_string(),
+            stdout,
+            stderr,
         })
     }
 }
