@@ -1,9 +1,11 @@
-rustc --output-format json << EOF
+#!/bin/sh
+
+cat > out.rs << EOF
 mod inner {
     pub struct Public;
 }
 
 pub use inner::Public as Reexported;
-
-fn main() {}
 EOF
+
+rustdoc out.rs --output-format json
