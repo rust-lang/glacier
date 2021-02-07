@@ -1,0 +1,2 @@
+trait t { const
+impl
