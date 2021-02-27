@@ -7,6 +7,5 @@ fn value() -> Option<&'static _> {
 }
 
 const _: Option<_> = {
-
     let _: Option<_> = map(value);
 };
