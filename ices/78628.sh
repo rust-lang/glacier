@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc -Zunsound-mir-opts - << EOF
+rustc -Zunsound-mir-opts -C opt-level=3 - << EOF
 // run-pass
 
 #![allow(dead_code)]
