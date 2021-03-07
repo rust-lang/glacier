@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc --emit mir -Z mir-opt-level=2 - <<EOF
+rustc --emit mir -Z mir-opt-level=3 - <<EOF
 // build-pass
 #![allow(dead_code)]
 trait Foo {

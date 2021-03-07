@@ -8,4 +8,4 @@ fn main() {
 
 EOF
 
-rustc -Zmir-opt-level=2 72372.rs
+rustc -Zmir-opt-level=3 72372.rs

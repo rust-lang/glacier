@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc +nightly --edition 2018 -Z mir-opt-level=2 - << EOF
+rustc +nightly --edition 2018 -Z mir-opt-level=3 - << EOF
 pub async fn connect() {}
 pub fn block_on<F: std::future::Future>(_: F) {}
 fn main() {
