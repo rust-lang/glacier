@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc -Z mir-opt-level=3 - << EOF
+rustc -Z mir-opt-level=4 - << EOF
 #![feature(const_generics, box_syntax)]
 #![allow(incomplete_features)]
 

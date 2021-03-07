@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc -Zmir-opt-level=2 - << EOF
+rustc -Zmir-opt-level=3 - << EOF
 #![feature(type_alias_impl_trait)]
 
 use std::marker::PhantomData;

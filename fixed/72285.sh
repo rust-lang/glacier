@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc -Z mir-opt-level=3 - << EOF
+rustc -Z mir-opt-level=4 - << EOF
 
 fn main() {
     let i = (0..usize::max_value()).chain(0..10).skip(usize::max_value());

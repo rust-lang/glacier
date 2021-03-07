@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc --emit=mir -Zmir-opt-level=2 - <<'EOF'
+rustc --emit=mir -Zmir-opt-level=3 - <<'EOF'
 // build-pass
 pub trait Foo<'a> {
     type Bar;

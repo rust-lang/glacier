@@ -29,5 +29,5 @@ pub async fn h() {}
 
 EOF
 
-rustc --edition=2018 -Zmir-opt-level=2 -Zunsound-mir-opts x.rs
-rustc --edition=2018 -Zmir-opt-level=2 y.rs --extern x -L.
+rustc --edition=2018 -Zmir-opt-level=3 -Zunsound-mir-opts x.rs
+rustc --edition=2018 -Zmir-opt-level=3 y.rs --extern x -L.

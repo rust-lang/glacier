@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc -Z mir-opt-level=2 - << EOF
+rustc -Z mir-opt-level=3 - << EOF
 
 fn load<R>(_r: R) {}
 

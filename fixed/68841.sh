@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc -Z mir-opt-level=2 --edition 2018 - << END
+rustc -Z mir-opt-level=3 --edition 2018 - << END
 #![feature(async_closure)]
 
 use std::future::Future;

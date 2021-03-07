@@ -19,4 +19,4 @@ fn main() {
 
 EOF
 
-rustc -Zmir-opt-level=2 --emit=mir 72181.rs
+rustc -Zmir-opt-level=3 --emit=mir 72181.rs
