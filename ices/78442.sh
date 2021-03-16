@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc -Z mir-opt-level=3 - << EOF
+rustc -Z inline-mir - << EOF
 #![crate_type = "lib"]
 
 // Error won't happen if "bar" is not generic
@@ -9,7 +9,7 @@ pub fn bar<P>(_baz: P) {
 }
 
 // Error won't happen if "iterate" hasn't impl Trait or has generics
-fn hide_foo() -> impl Fn() { 
+fn hide_foo() -> impl Fn() {
     foo
 }
 
