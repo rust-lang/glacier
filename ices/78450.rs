@@ -1,3 +1,4 @@
+#![feature(min_type_alias_impl_trait)]
 #![feature(type_alias_impl_trait)]
 #![no_std]
 #![crate_type = "lib"]
