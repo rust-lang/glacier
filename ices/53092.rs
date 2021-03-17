@@ -1,5 +1,7 @@
 #![feature(const_fn)]
 #![feature(const_fn_union)]
+#![feature(impl_trait_in_bindings)]
+#![feature(min_type_alias_impl_trait)]
 #![feature(type_alias_impl_trait)]
 #![feature(untagged_unions)]
 
