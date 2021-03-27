@@ -1,6 +1,4 @@
-#!/bin/bash
-
-rustc -C embed-bitcode=no -C codegen-units=1 -C debuginfo=2 --crate-type lib - <<'EOF'
+#![crate_type = "lib"]
 #![feature(rustc_attrs)]
 
 // Uncommenting any of these attributes will successfully compile 
@@ -17,4 +15,3 @@ struct Integer(u8);
 #[rustc_layout_scalar_valid_range_end(0xFFFF)]
 struct Integers(u8, u8);
 */
-EOF
