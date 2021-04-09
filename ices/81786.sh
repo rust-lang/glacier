@@ -28,4 +28,4 @@ pub struct Wrap<'a> {
 fn main() {}
 EOF
 
-rustdoc out.rs --output-format json
+rustdoc out.rs -Z unstable-options --output-format json

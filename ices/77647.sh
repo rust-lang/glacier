@@ -6,4 +6,4 @@ cat > out.rs <<'EOF'
 struct A<T, const N: core::num::NonZeroUsize>([T; N.get()]) where [T; N.get()]: Sized;
 EOF
 
-rustdoc out.rs --output-format json
+rustdoc out.rs -Z unstable-options --output-format json
