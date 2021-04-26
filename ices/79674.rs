@@ -1,6 +1,5 @@
-#![feature(const_generics)]
-#![feature(const_evaluatable_checked)]
-#![feature(const_fn)]
+#![feature(const_evaluatable_checked, const_fn, const_fn_trait_bound, const_generics)]
+#![allow(incomplete_features)]
 
 trait MiniTypeId {
     const TYPE_ID: u64;
