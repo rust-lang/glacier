@@ -16,10 +16,9 @@ impl Ref<'_> {
 
     fn bar<const A: usize>()
     where
-	([(); A - 0], ()): Sized,
+    ([(); A - 0], ()): Sized,
     {
     }
 }
 
 EOF
-
