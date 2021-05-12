@@ -6,4 +6,4 @@ trait Foo {
 
 #[rustc_layout(debug)]
 type Edges<E> = <E as Foo>::Bar;
-
+fn main() {}
