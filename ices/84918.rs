@@ -18,3 +18,5 @@ shl_assign_impl !
 )   )
 }
 shl_assign_impl_all! { u8                                                  }
+
+fn main() {}
