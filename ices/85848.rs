@@ -1,0 +1,29 @@
+#![crate_type = "lib"]
+#![feature(const_generics, const_fn_trait_bound, const_evaluatable_checked)]
+
+trait _Contains<T> {
+    const does_contain: bool;
+}
+
+trait Contains<T, const Satisfied: bool> {}
+
+trait Delegates<T> {}
+
+impl<T, U> Delegates<U> for T where T: Contains<U, true> {}
+
+const fn contains<A, B>() -> bool
+where
+    A: _Contains<B>,
+{
+    A::does_contain
+}
+
+impl<T, U> Contains<T, { contains::<T, U>() }> for U where T: _Contains<U> {}
+
+fn writes_to_path<C>(cap: &C) {
+    writes_to_specific_path(&cap);
+}
+
+fn writes_to_specific_path<C: Delegates<()>>(cap: &C) {}
+
+fn main() {}
