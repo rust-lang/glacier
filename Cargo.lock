@@ -432,6 +432,7 @@ dependencies = [
 name = "labeler"
 version = "0.1.0"
 dependencies = [
+ "glacier",
  "once_cell",
  "regex",
  "reqwest",

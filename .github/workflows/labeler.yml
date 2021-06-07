@@ -17,6 +17,7 @@ jobs:
         run: |
           rustup set profile minimal
           rustup toolchain install nightly
+          rustup toolchain install beta
 
       - name: Cargo run labeler
         run: cargo run -p labeler

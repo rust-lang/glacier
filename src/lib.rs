@@ -6,46 +6,81 @@ use std::process::Command;
 
 pub use rayon;
 
+mod regression;
+
+pub use regression::RegressionKind;
+
 static RUSTC: &str = "rustc";
 static ICES_PATH: &str = "ices";
 static SHELL: &str = "bash";
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
 enum TestMode {
     SingleFile,
     ShellScript,
 }
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
-struct ICE {
+#[derive(Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct ICE {
     path: PathBuf,
     mode: TestMode,
+    toolchain: Option<String>,
 }
 
 impl ICE {
-    fn from_path(path: PathBuf) -> Result<Self> {
+    pub fn from_path(path: PathBuf) -> Result<Self> {
         let mode = match path.extension().and_then(|e| e.to_str()) {
             Some("rs") => TestMode::SingleFile,
             Some("sh") => TestMode::ShellScript,
             _ => bail!("unknown ICE test extension: {}", path.display()),
         };
 
-        Ok(Self { path, mode })
+        Ok(Self {
+            path,
+            mode,
+            toolchain: None,
+        })
+    }
+
+    pub fn id(&self) -> usize {
+        let s = self
+            .path
+            .file_stem()
+            .unwrap()
+            .to_owned()
+            .into_string()
+            .unwrap();
+        // Some files have names like 123-1.rs; only get the first part of it
+        let s = s.split('-').next().unwrap();
+        let id = s.parse().unwrap();
+        id
+    }
+
+    pub fn path(&self) -> &Path {
+        self.path.as_path()
+    }
+
+    pub fn with_toolchain(mut self, toolchain: impl Into<String>) -> Self {
+        self.toolchain = Some(toolchain.into());
+        self
     }
 
     fn test(self) -> Result<TestResult> {
         let workdir = tempfile::tempdir()?;
-        let output = match self.mode {
-            TestMode::SingleFile => Command::new(RUSTC)
-                .args(&["--edition", "2018"])
-                .arg(std::fs::canonicalize(&self.path)?)
-                .current_dir(workdir.path())
-                .output()?,
-            TestMode::ShellScript => Command::new(SHELL)
-                .arg(std::fs::canonicalize(&self.path)?)
-                .current_dir(workdir.path())
-                .output()?,
+        let mut cmd = match self.mode {
+            TestMode::SingleFile => {
+                let mut c = Command::new(RUSTC);
+                c.args(&["--edition", "2018"]);
+                c
+            }
+            TestMode::ShellScript => Command::new(SHELL),
         };
+        cmd.arg(std::fs::canonicalize(&self.path)?)
+            .current_dir(workdir.path());
+        if let Some(tc) = &self.toolchain {
+            cmd.env("RUSTUP_TOOLCHAIN", tc);
+        }
+        let output = cmd.output()?;
 
         let stdout = String::from_utf8_lossy(&output.stdout).to_string();
         let stderr = String::from_utf8_lossy(&output.stderr).to_string();
@@ -163,7 +198,7 @@ impl fmt::Display for TestResult {
     }
 }
 
-fn discover(dir: &str) -> Result<Vec<ICE>> {
+pub fn discover(dir: &str) -> Result<Vec<ICE>> {
     let mut ices = Vec::new();
     for entry in std::fs::read_dir(dir)? {
         let entry = entry?;

@@ -115,4 +115,10 @@ pub(crate) struct Labels {
 #[derive(Deserialize, Debug)]
 pub(crate) struct Issue {
     pub(crate) number: usize,
+    pub(crate) labels: Vec<Label>,
+}
+
+#[derive(Deserialize, Debug)]
+pub(crate) struct Label {
+    pub(crate) name: String,
 }

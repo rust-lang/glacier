@@ -1,5 +1,5 @@
 use anyhow::{bail, Result};
-use glacier::{TestResult, Outcome};
+use glacier::{Outcome, TestResult};
 use rayon::prelude::*;
 
 fn main() -> Result<()> {
@@ -21,7 +21,7 @@ fn main() -> Result<()> {
 
     match failed.len() {
         0 => eprintln!("\nFinished: No fixed ICEs"),
-        len => bail!("{} ICEs are now fixed!", len)
+        len => bail!("{} ICEs are now fixed!", len),
     }
 
     Ok(())
