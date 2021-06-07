@@ -17,3 +17,6 @@ members = [
     "autofix",
     "labeler"
 ]
+
+[patch.crates-io]
+glacier = { path = "." }
