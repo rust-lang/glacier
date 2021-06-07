@@ -38,7 +38,7 @@ pub(crate) fn create_issue(
         labels: &'a [&'a str],
     }
 
-    CLIENT
+    let resp = CLIENT
         .post(&url)
         .bearer_auth(&config.token)
         .json(&NewIssue {
@@ -46,8 +46,11 @@ pub(crate) fn create_issue(
             body,
             labels,
         })
-        .send()?
-        .error_for_status()?;
+        .send()?;
+    if let Err(err) = resp.error_for_status_ref() {
+        eprintln!("Failed to create issue, err: `{:?}`, server response: `{:?}`", err, resp.text());
+        return Err(err);
+    }
 
     Ok(())
 }
