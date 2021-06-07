@@ -1,27 +1,13 @@
 use crate::github::IssueState;
-use regex::Regex;
-use std::fs;
 
 mod github;
-
-fn issue_list() -> Vec<usize> {
-    let mut issue_list = Vec::new();
-    for path in fs::read_dir("./ices").unwrap() {
-        let file_name = path.unwrap().path().display().to_string();
-        let re = Regex::new(r"[0-9]+").unwrap();
-        let caps = re.captures(&file_name).unwrap();
-        issue_list.push(caps.get(0).unwrap().as_str().parse().unwrap());
-    }
-    issue_list.sort_unstable();
-    issue_list.dedup();
-
-    issue_list
-}
 
 fn main() {
     let config = github::Config::from_env().unwrap();
 
-    let mut tested_issue_list = issue_list();
+    let mut tested_issue_list = glacier::discover("./ices").unwrap().into_iter().map(|ice| ice.id()).collect::<Vec<_>>();
+    tested_issue_list.sort_unstable();
+    tested_issue_list.dedup();
     println!("current tested issue list: {:?}", tested_issue_list);
 
     let issues =
