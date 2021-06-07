@@ -21,27 +21,27 @@ fn issue_list() -> Vec<usize> {
 fn main() {
     let config = github::Config::from_env().unwrap();
 
-    let mut unlabeled_issue_list = issue_list();
-    println!("current tested issue list: {:?}", unlabeled_issue_list);
+    let mut tested_issue_list = issue_list();
+    println!("current tested issue list: {:?}", tested_issue_list);
 
     let issues =
         crate::github::get_labeled_issues(&config, "rust-lang/rust", "glacier".to_string());
     let mut labeled_issue_numbers: Vec<usize> = Vec::new();
     let mut closed_issue_numbers: Vec<usize> = Vec::new();
     for i in issues.unwrap() {
-        if i.state == IssueState::Closed {
+        if i.state == IssueState::Closed && tested_issue_list.contains(&i.number) {
             closed_issue_numbers.push(i.number);
         }
         labeled_issue_numbers.push(i.number);
     }
-    unlabeled_issue_list.retain(|&x| !labeled_issue_numbers.contains(&x));
-    println!("unlabeled issue list: {:?}", unlabeled_issue_list);
+    tested_issue_list.retain(|&x| !labeled_issue_numbers.contains(&x));
+    println!("unlabeled issue list: {:?}", tested_issue_list);
     println!("closed issues list: {:?}", closed_issue_numbers);
 
     let labels: crate::github::Labels = crate::github::Labels {
         labels: vec!["glacier".to_string()],
     };
-    for i in unlabeled_issue_list {
+    for i in tested_issue_list {
         println!(
             "Adding the `{:?}` label to issue#{:?}...",
             &labels.labels, i
