@@ -1,4 +1,4 @@
-use once_cell::sync::Lazy;
+use once_cell::sync::{Lazy, OnceCell};
 use regex::Regex;
 use reqwest::blocking::Client;
 use serde::{Deserialize, Serialize};
@@ -115,21 +115,20 @@ pub(crate) fn get_labeled_issues(
 }
 
 fn get_result_length(config: &Config, url: &str) -> Result<usize, Box<dyn std::error::Error>> {
+    static RE_LAST_PAGE: OnceCell<Regex> = OnceCell::new();
     let res = CLIENT.get(url).bearer_auth(&config.token).send()?;
 
     if res.status().is_success() {
         if let Some(link) = res.headers().get("Link") {
             let link_string = String::from_utf8(link.as_bytes().to_vec()).unwrap();
-            let re_last_page = Regex::new(r#"page=[0-9]+>; rel="last""#).unwrap();
-            let re_page_number = Regex::new(r"[0-9]+").unwrap();
-            let last_page = re_last_page
+            let re_last_page = RE_LAST_PAGE.get_or_init(|| Regex::new(r#"page=([0-9]+)>; rel="last""#).unwrap());
+            let last_page_number = re_last_page
                 .captures(&link_string)
                 .unwrap()
-                .get(0)
+                .get(1)
                 .unwrap()
                 .as_str();
-            let page_number = re_page_number.captures(&last_page).unwrap();
-            let pages: usize = page_number.get(0).unwrap().as_str().parse().unwrap();
+            let pages: usize = last_page_number.parse().unwrap();
 
             Ok(pages)
         } else {
