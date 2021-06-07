@@ -1,3 +1,4 @@
+use crate::github::IssueState;
 use regex::Regex;
 use std::fs;
 
@@ -23,13 +24,19 @@ fn main() {
     let mut unlabeled_issue_list = issue_list();
     println!("current tested issue list: {:?}", unlabeled_issue_list);
 
-    let issues = crate::github::get_labeled_issues(&config, "glacier".to_string());
+    let issues =
+        crate::github::get_labeled_issues(&config, "rust-lang/rust", "glacier".to_string());
     let mut labeled_issue_numbers: Vec<usize> = Vec::new();
+    let mut closed_issue_numbers: Vec<usize> = Vec::new();
     for i in issues.unwrap() {
+        if i.state == IssueState::Closed {
+            closed_issue_numbers.push(i.number);
+        }
         labeled_issue_numbers.push(i.number);
     }
     unlabeled_issue_list.retain(|&x| !labeled_issue_numbers.contains(&x));
     println!("unlabeled issue list: {:?}", unlabeled_issue_list);
+    println!("closed issues list: {:?}", closed_issue_numbers);
 
     let labels: crate::github::Labels = crate::github::Labels {
         labels: vec!["glacier".to_string()],
@@ -50,5 +57,29 @@ fn main() {
                 std::process::exit(1);
             }
         }
+    }
+
+    let issues_in_triage =
+        crate::github::get_labeled_issues(&config, "rust-lang/glacier", "triage".to_string())
+            .unwrap();
+    for id in closed_issue_numbers {
+        let title = format!("issue-{}", id);
+        if issues_in_triage
+            .iter()
+            .any(|issue| issue.title.starts_with(&title))
+        {
+            // Triage issue already created
+            continue;
+        }
+
+        let body = format!("See rust-lang/rust#{}", id);
+
+        crate::github::create_issue(
+            &config,
+            &format!("{} has been closed", title),
+            &body,
+            &["triage"],
+        )
+        .unwrap()
     }
 }

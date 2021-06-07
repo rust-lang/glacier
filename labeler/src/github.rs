@@ -23,6 +23,35 @@ impl Config {
     }
 }
 
+pub(crate) fn create_issue(
+    config: &Config,
+    title: &str,
+    body: &str,
+    labels: &[&str],
+) -> Result<(), reqwest::Error> {
+    let url = format!("https://api.github.com/repos/rust-lang/glacier/issues");
+
+    #[derive(Serialize)]
+    struct NewIssue<'a> {
+        title: &'a str,
+        body: &'a str,
+        labels: &'a [&'a str],
+    }
+
+    CLIENT
+        .post(&url)
+        .bearer_auth(&config.token)
+        .json(&NewIssue {
+            title,
+            body,
+            labels,
+        })
+        .send()?
+        .error_for_status()?;
+
+    Ok(())
+}
+
 pub(crate) fn label_issue(
     config: &Config,
     labels: &Labels,
@@ -45,11 +74,12 @@ pub(crate) fn label_issue(
 
 pub(crate) fn get_labeled_issues(
     config: &Config,
+    repo: &str,
     label_name: String,
 ) -> Result<Vec<Issue>, reqwest::Error> {
     let url = format!(
-        "https://api.github.com/repos/rust-lang/rust/issues?labels={}&state=all",
-        label_name
+        "https://api.github.com/repos/{}/issues?labels={}&state=all",
+        repo, label_name
     );
 
     let mut issues: Vec<Issue> = CLIENT
@@ -115,4 +145,13 @@ pub(crate) struct Labels {
 #[derive(Deserialize, Debug)]
 pub(crate) struct Issue {
     pub(crate) number: usize,
+    pub(crate) title: String,
+    pub(crate) state: IssueState,
+}
+
+#[derive(Deserialize, Debug, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
+pub(crate) enum IssueState {
+    Open,
+    Closed,
 }
