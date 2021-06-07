@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Temporary moved as chalk is incomplete.
+
 rustc -Zchalk - << 'EOF'
 const FOO: &&&u32 = &&&42;
 
