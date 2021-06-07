@@ -1,3 +1,5 @@
+// Taken from #68578.
+
 trait Trait { type Resources: Resources; }
 impl Trait for () {
     type Resources = usize;

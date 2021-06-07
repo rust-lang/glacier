@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Temporary moved as chalk is experimental.
+
 rustc -Zchalk - << 'EOF'
 fn foo<F, G>(_: G, _: Box<F>)
     where
