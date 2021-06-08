@@ -17,7 +17,7 @@ enum TestMode {
 }
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
-struct ICE {
+pub struct ICE {
     path: PathBuf,
     mode: TestMode,
 }
@@ -31,6 +31,20 @@ impl ICE {
         };
 
         Ok(Self { path, mode })
+    }
+
+    pub fn id(&self) -> usize {
+        let s = self
+            .path
+            .file_stem()
+            .unwrap()
+            .to_owned()
+            .into_string()
+            .unwrap();
+        // Some files have names like 123-1.rs; only get the first part of it
+        let s = s.split('-').next().unwrap();
+        let id = s.parse().unwrap();
+        id
     }
 
     fn test(self) -> Result<TestResult> {
@@ -163,7 +177,7 @@ impl fmt::Display for TestResult {
     }
 }
 
-fn discover(dir: &str) -> Result<Vec<ICE>> {
+pub fn discover(dir: &str) -> Result<Vec<ICE>> {
     let mut ices = Vec::new();
     for entry in std::fs::read_dir(dir)? {
         let entry = entry?;
