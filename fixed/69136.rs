@@ -3,7 +3,7 @@
 trait SomeTrait where {}
 
 trait WithAssoc<A> where {
-	type AssocType;
+    type AssocType;
 }
 
 type Return<A> // 'a is not in scope

@@ -12,13 +12,13 @@ enum MyEnum {
 }
 
 fn f(arg3: bool) -> MyStruct {
-	match if arg3 { Some(MyEnum::Variant3) } else { None } {
-		Some(t) => {
-			let ah = t;
-			return MyStruct(Some(ah));
-		}
-		_ => MyStruct(None)
-	}
+    match if arg3 { Some(MyEnum::Variant3) } else { None } {
+        Some(t) => {
+            let ah = t;
+            return MyStruct(Some(ah));
+        }
+        _ => MyStruct(None)
+    }
 }
 
 #[derive(Debug)]
