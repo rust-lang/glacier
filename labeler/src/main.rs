@@ -3,9 +3,13 @@ use crate::github::IssueState;
 mod github;
 
 fn main() {
-    let config = github::Config::from_env().unwrap();
+    let config = github::Config::from_env(false).unwrap();
 
-    let mut tested_issue_list = glacier::discover("./ices").unwrap().into_iter().map(|ice| ice.id()).collect::<Vec<_>>();
+    let mut tested_issue_list = glacier::discover("./ices")
+        .unwrap()
+        .into_iter()
+        .map(|ice| ice.id())
+        .collect::<Vec<_>>();
     tested_issue_list.sort_unstable();
     tested_issue_list.dedup();
     println!("current tested issue list: {:?}", tested_issue_list);
@@ -45,6 +49,8 @@ fn main() {
         }
     }
 
+    // Then we use `GITHUB_TOKEN` instead of `LABEL_TOKEN`.
+    let config = github::Config::from_env(true).unwrap();
     let issues_in_triage =
         crate::github::get_labeled_issues(&config, "rust-lang/glacier", "triage".to_string())
             .unwrap();

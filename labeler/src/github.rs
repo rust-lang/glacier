@@ -16,9 +16,13 @@ pub(crate) struct Config {
 }
 
 impl Config {
-    pub(crate) fn from_env() -> Result<Self, VarError> {
+    pub(crate) fn from_env(on_glacier: bool) -> Result<Self, VarError> {
         Ok(Self {
-            token: var("LABEL_TOKEN")?,
+            token: if on_glacier {
+                var("GITHUB_TOKEN")?
+            } else {
+                var("LABEL_TOKEN")?
+            },
         })
     }
 }
@@ -48,7 +52,11 @@ pub(crate) fn create_issue(
         })
         .send()?;
     if let Err(err) = resp.error_for_status_ref() {
-        eprintln!("Failed to create issue, err: `{:?}`, server response: `{:?}`", err, resp.text());
+        eprintln!(
+            "Failed to create issue, err: `{:?}`, server response: `{:?}`",
+            err,
+            resp.text()
+        );
         return Err(err);
     }
 
@@ -121,7 +129,8 @@ fn get_result_length(config: &Config, url: &str) -> Result<usize, Box<dyn std::e
     if res.status().is_success() {
         if let Some(link) = res.headers().get("Link") {
             let link_string = String::from_utf8(link.as_bytes().to_vec()).unwrap();
-            let re_last_page = RE_LAST_PAGE.get_or_init(|| Regex::new(r#"page=([0-9]+)>; rel="last""#).unwrap());
+            let re_last_page =
+                RE_LAST_PAGE.get_or_init(|| Regex::new(r#"page=([0-9]+)>; rel="last""#).unwrap());
             let last_page_number = re_last_page
                 .captures(&link_string)
                 .unwrap()
