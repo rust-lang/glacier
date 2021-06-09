@@ -1,1 +1,2 @@
 * text=auto eol=lf
+*.rs whitespace=tab-in-indent,trailing-space,tabwidth=4
