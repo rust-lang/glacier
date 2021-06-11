@@ -1,2 +1,5 @@
-fn ordering4 < 'a , 'b     > ( a :            ,   self , self ,   self ,   self , ... ,   self ,   self , ... ) where F : FnOnce ( & 'a & 'b usize ) {
-}
+trait H<T> {}
+
+unsafe extern "C" fn ordering4<'a, F: H<&'static &'a ()>>(_: (), ...) {}
+
+fn main() {}
