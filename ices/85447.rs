@@ -15,7 +15,6 @@ pub struct BindGroup {
     _id: <C as Ctx>::BindGroupId,
 }
 
-
 pub fn insert(map: &mut HashMap<*const BindGroup, u32>, bind_group: *const BindGroup) {
     map.insert(bind_group, 1);
 }
