@@ -68,6 +68,9 @@ impl ICE {
             ice: self,
             outcome: match output.status.code() {
                 _ if stderr.contains("error: internal compiler error") => Outcome::ICEd,
+                Some(x) if x != 0 && stderr.contains("error: linking with `cc` failed") => {
+                    Outcome::ICEd
+                }
                 Some(0) => Outcome::NoError,
                 Some(101) => Outcome::ICEd, // An ICE will cause an error code of 101
                 // Bash uses 128+N for processes terminated by signal N
