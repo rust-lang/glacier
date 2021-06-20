@@ -1,3 +1,4 @@
+use chrono::{DateTime, Utc};
 use once_cell::sync::{Lazy, OnceCell};
 use regex::Regex;
 use reqwest::blocking::Client;
@@ -158,6 +159,7 @@ pub(crate) struct Issue {
     pub(crate) number: usize,
     pub(crate) title: String,
     pub(crate) state: IssueState,
+    pub(crate) closed_at: DateTime<Utc>,
 }
 
 #[derive(Deserialize, Debug, PartialEq, Eq)]

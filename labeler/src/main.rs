@@ -1,3 +1,5 @@
+use chrono::{Duration, Utc};
+
 use crate::github::IssueState;
 
 mod github;
@@ -19,7 +21,8 @@ fn main() {
     let mut labeled_issue_numbers: Vec<usize> = Vec::new();
     let mut closed_issue_numbers: Vec<usize> = Vec::new();
     for i in issues.unwrap() {
-        if i.state == IssueState::Closed && tested_issue_list.contains(&i.number) {
+        let recently_closed = (Utc::now() - i.closed_at) < Duration::days(3);
+        if i.state == IssueState::Closed && !recently_closed && tested_issue_list.contains(&i.number) {
             closed_issue_numbers.push(i.number);
         }
         labeled_issue_numbers.push(i.number);
