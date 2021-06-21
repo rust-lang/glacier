@@ -159,7 +159,7 @@ pub(crate) struct Issue {
     pub(crate) number: usize,
     pub(crate) title: String,
     pub(crate) state: IssueState,
-    pub(crate) closed_at: DateTime<Utc>,
+    pub(crate) closed_at: Option<DateTime<Utc>>,
 }
 
 #[derive(Deserialize, Debug, PartialEq, Eq)]
