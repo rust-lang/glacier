@@ -1,26 +1,4 @@
-#!/bin/bash
-
-cat > Cargo.toml <<'EOF'
-[package]
-name = "abc"
-version = "0.0.1"
-edition = "2018"
-EOF
-
-mkdir -p src
-
-cat > src/lib.rs <<'EOF'
 use std::ops::BitAnd;
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn is_set() {
-        assert!(0xffu8.bit::<0>());
-    }
-}
 
 trait Bits {
     fn bit<const I: u8>(self) -> bool;
@@ -35,6 +13,7 @@ impl<T> Bits for T where
         mask & self == mask
     }
 }
-EOF
 
-cargo test
+fn main() {
+    let _ = 0xffu8.bit::<0>();
+}
