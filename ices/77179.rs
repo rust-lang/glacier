@@ -2,10 +2,6 @@
 
 type Pointer<T> = impl std::ops::Deref<Target=T>;
 
-fn test() -> Pointer<_> {
-    Box::new(1)
-}
-
 fn main() {
-    test();
+    let p: Pointer<_> = Box::new(1);
 }
