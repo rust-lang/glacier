@@ -1,6 +1,4 @@
-#![feature(impl_trait_in_bindings)]
 #![feature(min_type_alias_impl_trait)]
-#![feature(type_alias_impl_trait)]
 #![allow(dead_code)]
 
 type Bug<T, U> = impl Fn(T) -> U + Copy;
