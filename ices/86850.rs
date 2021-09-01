@@ -1,5 +1,4 @@
-#![feature(const_generics)]
-#![feature(const_evaluatable_checked)]
+#![feature(generic_const_exprs)]
 #![allow(incomplete_features)]
 use core::marker::PhantomData;
 

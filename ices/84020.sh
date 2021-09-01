@@ -1,7 +1,7 @@
 #!/bin/bash
 
 rustc --crate-name bug --edition=2018 --emit=dep-info,link -C opt-level=3 -C embed-bitcode=no --test -C metadata=1974b6bb1d213572 -C extra-filename=-1974b6bb1d213572 --out-dir /tmp --target aarch64-apple-darwin - <<'EOF'
-#![feature(const_generics, platform_intrinsics, repr_simd)]
+#![feature(generic_const_exprs, platform_intrinsics, repr_simd)]
 #![allow(incomplete_features)]
 
 extern "platform-intrinsic" {

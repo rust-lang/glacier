@@ -1,5 +1,4 @@
-#![feature(const_generics)]
-#![feature(const_evaluatable_checked)]
+#![feature(generic_const_exprs)]
 
 pub trait IsTrue<const T: bool> {}
 impl IsTrue<true> for () {}

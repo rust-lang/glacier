@@ -1,5 +1,5 @@
 #![allow(incomplete_features)]
-#![feature(const_generics, const_evaluatable_checked)]
+#![feature(generic_const_exprs)]
 
 trait Foo {
     const N: usize;

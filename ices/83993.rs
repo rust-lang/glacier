@@ -1,4 +1,4 @@
-#![feature(const_generics)]
+#![feature(generic_const_exprs)]
 fn bug<'a>()
 where
     for<'b> [(); {

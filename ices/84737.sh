@@ -2,7 +2,7 @@
 
 rustc --edition=2018 - <<'EOF'
 #![allow(incomplete_features)]
-#![feature(const_generics)]
+#![feature(generic_const_exprs)]
 #![crate_type="lib"]
 
 async fn test(test: [(); { 0 }]) {

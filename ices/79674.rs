@@ -1,4 +1,4 @@
-#![feature(const_evaluatable_checked, const_fn, const_fn_trait_bound, const_generics)]
+#![feature(generic_const_exprs, const_fn_trait_bound)]
 #![allow(incomplete_features)]
 
 trait MiniTypeId {

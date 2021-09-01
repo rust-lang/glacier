@@ -4,7 +4,7 @@ rustc -Zdump-mir=all - <<EOF
 // build-pass
 
 #![allow(incomplete_features)]
-#![feature(const_generics)]
+#![feature(adt_const_params)]
 
 struct Bug<const S: &'static str>;
 

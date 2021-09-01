@@ -1,4 +1,4 @@
-#![feature(const_generics)]
+#![feature(generic_const_exprs)]
 
 trait MyTrait<T> {}
 
