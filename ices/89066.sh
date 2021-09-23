@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-rustc - --emit=mir -Zsave-analysis << 'EOF'
+rustc - -Zsave-analysis << 'EOF'
 #![feature(generic_arg_infer)]
 
 struct All<'a, T, const N: usize> {
