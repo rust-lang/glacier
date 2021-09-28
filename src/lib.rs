@@ -43,8 +43,7 @@ impl ICE {
             .unwrap();
         // Some files have names like 123-1.rs; only get the first part of it
         let s = s.split('-').next().unwrap();
-        let id = s.parse().unwrap();
-        id
+        s.parse().unwrap()
     }
 
     fn test(self) -> Result<TestResult> {
