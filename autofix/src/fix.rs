@@ -101,7 +101,7 @@ pub(crate) fn fix(test: &TestResult, config: &github::Config) -> Result<()> {
 
     let head = repo.head()?.peel_to_commit()?;
     let sig = repo.signature()?;
-    let tree = move_to_fixed(&repo, &test)?;
+    let tree = move_to_fixed(&repo, test)?;
 
     repo.commit(
         Some(&local_branch),
