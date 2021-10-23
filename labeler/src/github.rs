@@ -34,8 +34,6 @@ pub(crate) fn create_issue(
     body: &str,
     labels: &[&str],
 ) -> Result<(), reqwest::Error> {
-    let url = format!("https://api.github.com/repos/rust-lang/glacier/issues");
-
     #[derive(Serialize)]
     struct NewIssue<'a> {
         title: &'a str,
@@ -44,7 +42,7 @@ pub(crate) fn create_issue(
     }
 
     let resp = CLIENT
-        .post(&url)
+        .post("https://api.github.com/repos/rust-lang/glacier/issues")
         .bearer_auth(&config.token)
         .json(&NewIssue {
             title,
@@ -101,7 +99,7 @@ pub(crate) fn get_labeled_issues(
         .error_for_status()?
         .json()?;
 
-    let pages = get_result_length(&config, &url).unwrap();
+    let pages = get_result_length(config, &url).unwrap();
 
     if pages > 1 {
         for i in 2..=pages {
