@@ -1,6 +1,4 @@
-#!/bin/bash
-
-rustc --crate-type lib - << EOF
+#![crate_type = "lib"]
 
 use std::collections::HashMap;
 
@@ -13,7 +11,3 @@ pub trait WidgetExt {
 }
 
 static CALLBACKS: HashMap<*const dyn WidgetExt, dyn FnMut(&mut _) + 'static> = HashMap::new();
-
-pub fn main() {}
-
-EOF

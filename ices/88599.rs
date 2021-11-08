@@ -1,6 +1,4 @@
-#!/bin/bash
-
-rustc --crate-type lib - << EOF
+#![crate_type = "lib"]
 
 pub trait First {
     const CONST: bool;
@@ -18,5 +16,3 @@ pub trait Foo {
 impl <'a> Foo for () where &'a Self: Foo {
     const CONST: bool = <&Self>::CONST;
 }
-
-EOF
