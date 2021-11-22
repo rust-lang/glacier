@@ -13,8 +13,6 @@ jobs:
         run: |
           rustup set profile minimal
           rustup toolchain install nightly
-          # aarch64-apple-darwin is needed for issue-84020 and issue-84984
-          rustup target add --toolchain nightly aarch64-apple-darwin
 
       - name: cargo run glacier
         run: cargo run
