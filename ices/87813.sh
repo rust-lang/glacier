@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+
+OUTPUT=$(rustc - 2>&1 << EOF
 #[inline(always)]
 fn other_ext() {
     extern "C" {
@@ -18,3 +21,10 @@ fn main() {
     this_ext();
     other_ext();
 }
+EOF
+)
+
+echo "$OUTPUT"
+if echo "$OUTPUT" | grep -q 'error: linking with .* failed'; then
+    exit 101
+fi
