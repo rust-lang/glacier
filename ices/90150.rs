@@ -1,4 +1,4 @@
-#![feature(inline_const)]
+#![feature(inline_const_pat)]
 #![feature(generic_const_exprs)]
 
 const fn foo(val: usize) -> usize { val }
