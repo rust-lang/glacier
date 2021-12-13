@@ -43,3 +43,5 @@ impl<T: Spec1> Foo for T {
 impl<T: Spec2> Foo for T {
     fn Bar() {}
 }
+
+fn main() {}
