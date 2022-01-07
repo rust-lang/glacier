@@ -1,0 +1,36 @@
+name: Build
+
+runs:
+  using: "composite"
+  steps:
+    - name: Configure rustup
+      id: rustup
+      run: |
+        rustup update
+        rustup toolchain install --profile minimal nightly
+        rustup target add --toolchain nightly x86_64-pc-windows-msvc
+      shell: bash
+
+    - uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/registry/index/
+          ~/.cargo/registry/cache/
+          autofix/
+          labeler/
+          src/
+          target/
+        key: build-${{ github.run_id }}
+        restore-keys: build-
+
+    # We restore source files from the cache to keep their modification times,
+    # then use git to undo that for files that have actually changed. This
+    # prevents unnecessary rebuilds
+    - run: |
+        git status
+        git checkout .
+        git clean -f .
+      shell: bash
+
+    - run: cargo build --release --workspace --locked
+      shell: bash

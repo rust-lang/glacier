@@ -3,23 +3,13 @@ name: Continuous Integration
 on: [push, pull_request]
 
 jobs:
-  build:
+  main:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Configure rustup
-        run: |
-          rustup set profile minimal
-          rustup toolchain install nightly
-          rustup target add x86_64-pc-windows-msvc
+      - name: Build
+        uses: ./.github/actions/build
 
-      - name: cargo run glacier
-        run: cargo run
-
-      - name: cargo check autofix
-        run: cargo check -p autofix
-
-      - name: cargo check labeler
-        run: cargo check -p labeler
+      - run: ./target/release/glacier

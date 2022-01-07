@@ -6,20 +6,17 @@ on:
       - master
 
 jobs:
-  build:
+  label:
     runs-on: ubuntu-latest
     if: github.repository == 'rust-lang/glacier'
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Configure rustup
-        run: |
-          rustup set profile minimal
-          rustup toolchain install nightly
+      - name: Build
+        uses: ./.github/actions/build
 
-      - name: Cargo run labeler
-        run: cargo run -p labeler
+      - run: ./target/release/labeler
         env:
           LABEL_TOKEN: ${{ secrets.LABEL_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
