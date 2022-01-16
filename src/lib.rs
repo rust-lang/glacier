@@ -1,8 +1,8 @@
-use anyhow::{bail, Result};
+use anyhow::{bail, ensure, Result};
 use rayon::prelude::*;
-use std::fmt;
 use std::path::{Path, PathBuf};
 use std::process::Command;
+use std::{env, fmt};
 
 pub use rayon;
 
@@ -201,7 +201,21 @@ pub fn discover(dir: &str) -> Result<Vec<ICE>> {
 }
 
 pub fn test_all() -> Result<impl IndexedParallelIterator<Item = Result<TestResult>>> {
-    let iter = discover(ICES_PATH)?.into_par_iter().map(|ice| ice.test());
+    env::set_var("RUSTUP_TOOLCHAIN", "nightly");
 
-    Ok(iter)
+    let output = Command::new("rustc").arg("--version").output()?;
+
+    ensure!(
+        output.status.success(),
+        "nightly toolchain is not installed, run `rustup install nightly`"
+    );
+    let ices = discover(ICES_PATH)?;
+
+    eprintln!(
+        "running {} tests for {}",
+        ices.len(),
+        String::from_utf8_lossy(&output.stdout)
+    );
+
+    Ok(ices.into_par_iter().map(|ice| ice.test()))
 }

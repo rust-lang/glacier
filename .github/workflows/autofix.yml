@@ -5,7 +5,7 @@ on:
     - cron: "0 12 * * *"
 
 jobs:
-  build:
+  autofix:
     runs-on: ubuntu-latest
     if: github.repository == 'rust-lang/glacier'
 
@@ -22,12 +22,9 @@ jobs:
           git config --global user.name "rustbot"
           git config --global user.email "rustbot@users.noreply.github.com"
 
-      - name: Configure rustup
-        run: |
-          rustup set profile minimal
-          rustup toolchain install nightly
-          rustup target add x86_64-pc-windows-msvc
+      - name: Build
+        uses: ./.github/actions/build
 
-      - run: cargo run -p autofix
+      - run: ./target/release/autofix
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

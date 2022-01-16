@@ -13,7 +13,7 @@ the odd code path, even if the point of the change wasn’t to fix the bug.
 
 As such, this repository is a collection of these bugs, and it runs on Rust
 nightly, once a day, through GitHub Actions. If any of the ICEs stop happening, the build
-will fail, and I can close the associated bug.
+will fail, and we can close the associated bug.
 
 ## Helping out
 
@@ -23,7 +23,7 @@ Contributing to Glacier is fairly easy:
 2. Pick one.
 3. Create a file in `ices/` with the same digit as the bug.
 4. Copy the code that causes the ICE into your new file.
-5. (optional) Verify it works by running `cargo run` to run the tests.
+5. (optional) Verify it works by running `rustup update nightly`, then `cargo run` to run the tests.
 6. Send a pull request!
 
 Note: Running this on Windows may give false positives and report some ICEs as fixed,
