@@ -1,4 +1,5 @@
 #![crate_type = "lib"]
+#![feature(fmt_internals)]
 
 use core::{fmt, marker::PhantomData};
 
@@ -12,14 +13,11 @@ pub trait Trait {
 
 pub struct Ice<T>(<<Dynamic<T> as WrapperTrait>::Assoc as Trait>::Assoc);
 
-impl<T> fmt::Debug for Ice<T>
+fn ice<T>(i: Ice<T>)
 where
     <<Dynamic<T> as WrapperTrait>::Assoc as Trait>::Assoc: fmt::Debug,
 {
-    fn fmt(&self, _: &mut fmt::Formatter) -> fmt::Result {
-        format_args!("{:?}", self.0);
-        todo!()
-    }
+    fmt::ArgumentV1::new(&i.0, fmt::Debug::fmt);
 }
 
 pub struct TraitImplementor;
