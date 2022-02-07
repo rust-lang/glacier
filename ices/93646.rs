@@ -1,5 +1,5 @@
 struct X<const N: usize = {
-    let s: &str; s.len()
+    let s: usize; s + 1
 }>;
 
 pub fn main() {}
