@@ -15,13 +15,15 @@ fn main() -> Result<()> {
         })
         .collect::<Result<Vec<TestResult>, _>>()?;
 
+    let mut paths = Vec::new();
     for result in &failed {
         eprintln!("\n{}", result);
+        paths.push(result.path());
     }
 
     match failed.len() {
         0 => eprintln!("\nFinished: No fixed ICEs"),
-        len => bail!("{} ICEs are now fixed!", len),
+        len => bail!("{len} ICEs ({:?}) are now fixed!", paths),
     }
 
     Ok(())
