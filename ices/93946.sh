@@ -26,27 +26,27 @@ cat > subcrate/src/lib.rs <<'EOF'
 #[derive(PartialEq, Eq)]
 pub struct Const {}
 impl Const {
-	pub const fn func(self) -> usize { 1 }
+    pub const fn func(self) -> usize { 1 }
 }
 
 pub struct Foo<const C: Const>
 where
-	[(); C.func()]: Sized
+    [(); C.func()]: Sized
 {}
 
 pub trait Bar {
-	type Associated;
-	fn associated() -> Self::Associated;
+    type Associated;
+    fn associated() -> Self::Associated;
 }
 
 impl<const C: Const> Bar for Foo<C>
 where
-	[(); C.func()]: Sized
+    [(); C.func()]: Sized
 {
-	type Associated = [(); C.func()];
-	fn associated() -> Self::Associated {
-		[(); C.func()]
-	}
+    type Associated = [(); C.func()];
+    fn associated() -> Self::Associated {
+        [(); C.func()]
+    }
 }
 EOF
 
@@ -54,7 +54,7 @@ cat > src/main.rs <<'EOF'
 use subcrate::*;
 
 fn main() {
-	<Foo::<{Const{}}> as Bar>::associated();
+    <Foo::<{Const{}}> as Bar>::associated();
 }
 EOF
 

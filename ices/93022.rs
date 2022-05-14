@@ -1,4 +1,4 @@
-#![recursion_limit="256000"]
+#![recursion_limit = "256000"]
 
 struct Z;
 struct S<T>(T);
@@ -36,7 +36,7 @@ type x16 = SumOf<x8, x8>;
 type x32 = SumOf<x16, x16>;
 type x64 = SumOf<x32, x32>;
 type x128 = SumOf<x64, x64>;
-// 
+//
 
 trait NumericValue {
     const VALUE: usize;
@@ -48,13 +48,11 @@ impl NumericValue for Z {
 
 impl<N> NumericValue for S<N>
 where
-	N: NumericValue,
+    N: NumericValue,
 {
     const VALUE: usize = N::VALUE + 1;
-} 
+}
 
 const value: usize = <x16 as NumericValue>::VALUE;
 
-fn main() {
-  
-}
+fn main() {}
