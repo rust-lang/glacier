@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: tab character check
-        run: if grep -P '\t' -r ices/* fixed/*; then exit 1; fi
+        run: if grep -P '\t' -rn --color ices fixed; then exit 1; fi
 
       - name: Build
         uses: ./.github/actions/build
