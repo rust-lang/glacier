@@ -72,15 +72,4 @@ pub use lib::{Trophy, Walk};
 fn main() {
     // Example, taking the first step
     let _ = Walk::new().proceed_to::<1>();
-
-    // Don't be so eager to collect the trophy
-    // let trophy = Walk::new()
-    //     .proceed_to::<1>()
-    //     .proceed_to::<0>()
-    //     .collect_prize();
-
-    // Can't just make a Trophy out of thin air, you must earn it
-    // let trophy: Trophy = Trophy { _p: () };
-
-    // Can you collect the Trophy?
 }

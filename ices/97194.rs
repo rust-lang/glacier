@@ -4,5 +4,4 @@ extern "" {
     type T<'a> = &'a str;
 }
 
-
 fn main() {}
