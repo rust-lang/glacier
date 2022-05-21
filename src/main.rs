@@ -23,7 +23,8 @@ fn main() -> Result<()> {
 
     match failed.len() {
         0 => eprintln!("\nFinished: No fixed ICEs"),
-        len => bail!("{len} ICEs ({:?}) are now fixed!", paths),
+        1 => bail!("1 ICE ({paths:?}) is now fixed!"),
+        len => bail!("{len} ICEs ({paths:?}) are now fixed!"),
     }
 
     Ok(())
