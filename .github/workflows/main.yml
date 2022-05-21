@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: tab character check
         run: if grep -P '\t' -rn --color ices fixed; then exit 1; fi

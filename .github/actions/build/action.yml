@@ -11,7 +11,7 @@ runs:
         rustup target add --toolchain nightly x86_64-pc-windows-msvc
       shell: bash
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v3
       with:
         path: |
           ~/.cargo/registry/index/
