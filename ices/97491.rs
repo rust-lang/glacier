@@ -17,6 +17,4 @@ where T: Sub<Output=T>,
     }
 }
 
-fn main() {
-    
-}
+fn main() {}
