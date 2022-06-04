@@ -1,8 +1,6 @@
 #!/bin/sh
 
 rustc -Zmir-opt-level=3 --emit=mir - << EOF
-
-
 // check-pass
 
 #![allow(dead_code)]
@@ -65,6 +63,5 @@ where
 }
 
 fn main() {}
-
 
 EOF

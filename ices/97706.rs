@@ -21,4 +21,4 @@ pub fn repeat(f: impl FnOnce(f64) -> f64 + Clone, times: usize) -> impl FnOnce(f
     repeat_helper(f.clone(), f, times)
 }
 
-pub fn main() {}
+fn main() {}

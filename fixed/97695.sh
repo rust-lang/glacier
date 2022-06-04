@@ -22,6 +22,6 @@ where
     <Wrap<'a> as Associate>::Associated::create();
 }
 
-pub fn main() {}
+fn main() {}
 
 EOF

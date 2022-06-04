@@ -7,3 +7,5 @@ impl Lock {
         }
     }
 }
+
+fn main() {}
