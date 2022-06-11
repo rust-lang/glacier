@@ -29,7 +29,7 @@ Contributing to Glacier is fairly easy:
 Note: Running this on Windows may give false positives and report some ICEs as fixed,
 use either WSL or Linux for better accuracy.
 
-[ices]: https://github.com/rust-lang/rust/issues?q=is%3Aissue+is%3Aopen+label%3AI-ICE+-label%3AE-needs-mcve+-label%3Aglacier+-label%3Arequires-debug-assertions+
+[ices]: https://github.com/rust-lang/rust/issues?q=is%3Aissue+is%3Aopen+label%3AI-ICE+-label%3AE-needs-mcve+-label%3Aglacier+-label%3Arequires-debug-assertions
 
 ## License
 
