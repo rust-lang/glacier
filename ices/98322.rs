@@ -5,13 +5,13 @@ fn main() {}
 
 // Constant must be provided via an associated constant in a trait
 pub trait ConstTrait {
-	const ASSOC_CONST: usize;
+    const ASSOC_CONST: usize;
 }
 
 // For some reason I find it's necessary to have an implementation of this trait that recurses
 pub trait OtherTrait
 {
-	fn comm(self);
+    fn comm(self);
 }
 
 // There must be a blanket impl here
