@@ -33,7 +33,7 @@ impl ICE {
         Ok(Self { path, mode })
     }
 
-    pub fn id(&self) -> usize {
+    pub fn id(&self) -> IssueId {
         let s = self
             .path
             .file_stem()
@@ -43,7 +43,7 @@ impl ICE {
             .unwrap();
         // Some files have names like 123-1.rs; only get the first part of it
         let s = s.split('-').next().unwrap();
-        s.parse().unwrap()
+        IssueId(s.parse().unwrap())
     }
 
     fn test(self) -> Result<TestResult> {
@@ -77,6 +77,29 @@ impl ICE {
             stdout,
             stderr,
         })
+    }
+}
+
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub struct IssueId(pub usize);
+
+/// Filters which ICEs should be tested.
+#[derive(Default)]
+pub struct Filter {
+    ids: Vec<IssueId>,
+}
+
+impl Filter {
+    pub fn try_from_args(args: std::env::Args) -> Result<Self> {
+        let ids = args
+            .skip(1)
+            .map(|arg| Ok(IssueId(arg.parse()?)))
+            .collect::<Result<_>>()?;
+        Ok(Self { ids })
+    }
+
+    pub fn matches(&self, ice: &ICE) -> bool {
+        self.ids.is_empty() || self.ids.contains(&ice.id())
     }
 }
 
@@ -200,7 +223,9 @@ pub fn discover(dir: &str) -> Result<Vec<ICE>> {
     Ok(ices)
 }
 
-pub fn test_all() -> Result<impl IndexedParallelIterator<Item = Result<TestResult>>> {
+pub fn test_all_matching_filter(
+    filter: &Filter,
+) -> Result<impl IndexedParallelIterator<Item = Result<TestResult>>> {
     env::set_var("RUSTUP_TOOLCHAIN", "nightly");
 
     let output = Command::new("rustc").arg("--version").output()?;
@@ -209,13 +234,21 @@ pub fn test_all() -> Result<impl IndexedParallelIterator<Item = Result<TestResul
         output.status.success(),
         "nightly toolchain is not installed, run `rustup install nightly`"
     );
-    let ices = discover(ICES_PATH)?;
+    let all_ices = discover(ICES_PATH)?;
+    let ices_to_test: Vec<ICE> = all_ices
+        .into_iter()
+        .filter(|ice| filter.matches(ice))
+        .collect();
 
     eprintln!(
         "running {} tests for {}",
-        ices.len(),
+        ices_to_test.len(),
         String::from_utf8_lossy(&output.stdout)
     );
 
-    Ok(ices.into_par_iter().map(|ice| ice.test()))
+    Ok(ices_to_test.into_par_iter().map(|ice| ice.test()))
+}
+
+pub fn test_all() -> Result<impl IndexedParallelIterator<Item = Result<TestResult>>> {
+    test_all_matching_filter(&Filter::default())
 }

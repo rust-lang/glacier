@@ -21,9 +21,10 @@ Contributing to Glacier is fairly easy:
 
 1. Check out [this list][ices] of bugs on the Rust issue tracker.
 2. Pick one.
-3. Create a file in `ices/` with the same digit as the bug.
+3. Create a file in `ices/` with the same number as the issue reporting the ICE.
 4. Copy the code that causes the ICE into your new file.
-5. (optional) Verify it works by running `rustup update nightly`, then `cargo run` to run the tests.
+5. (optional) Verify it works by running `rustup update nightly`, then
+   `cargo run NUMBER` to run your ICE.
 6. Send a pull request!
 
 Note: Running this on Windows may give false positives and report some ICEs as fixed,

@@ -10,7 +10,7 @@ fn main() {
     let mut tested_issue_list = glacier::discover("./ices")
         .unwrap()
         .into_iter()
-        .map(|ice| ice.id())
+        .map(|ice| ice.id().0)
         .collect::<Vec<_>>();
     tested_issue_list.sort_unstable();
     tested_issue_list.dedup();
