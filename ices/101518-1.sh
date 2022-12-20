@@ -1,7 +1,6 @@
 #!/bin/bash
 
-rustc   -Cincremental=/tmp/a -Zincremental-verify-ich=yes --crate-type lib - <<'EOF'
-
+rustc -Cincremental=/tmp/a -Zincremental-verify-ich=yes --crate-type lib - <<'EOF'
 
 #[derive(PartialEq, Eq)]
 struct Id<'a> {
