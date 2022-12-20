@@ -21,7 +21,6 @@ fn foo() -> Foo {
 
 fn main() {}
 
-
 EOF
 
-rustdoc   out.rs
+rustdoc out.rs

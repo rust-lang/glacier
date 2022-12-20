@@ -6,5 +6,4 @@ pub fn ice(
     Vec::new()
 }
 
-fn main() {
-}
+fn main() {}

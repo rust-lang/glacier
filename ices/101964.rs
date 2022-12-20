@@ -1,4 +1,3 @@
-
 #![crate_type = "lib"]
 #![feature(lang_items)]
 #![no_std]

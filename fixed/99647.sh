@@ -13,4 +13,3 @@ async fn bar() {}
 fn main() {}
 
 EOF
-

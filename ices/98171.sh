@@ -30,7 +30,6 @@ fn main() {
     //~^ ERROR overflow while adding drop-check rules for FingerTree
 }
 
-
 EOF
 
-rustdoc   out.rs
+rustdoc out.rs
