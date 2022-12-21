@@ -1,8 +1,6 @@
 #!/bin/bash
 
 cat > out.rs <<'EOF'
-
-
 #![feature(type_alias_impl_trait)]
 
 fn main() {}
@@ -20,7 +18,6 @@ impl<W> Trait<W> for () {}
 fn foo_desugared<T: TraitWithAssoc>(_: T) -> Foo<T> {
     ()
 }
-
 
 EOF
 
