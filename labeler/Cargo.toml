@@ -9,7 +9,7 @@ edition = "2021"
 [dependencies]
 chrono = { version = "0.4.19", features = ["serde"] }
 glacier = "0.1.0"
-once_cell = "1"
+once_cell = { workspace = true }
 regex = "1"
-reqwest = { version = "0.11", features = ["blocking", "json"] }
-serde = { version = "1", features = ["derive"] }
+reqwest = { workspace = true }
+serde = { workspace = true }
