@@ -18,16 +18,16 @@ fn format_descriptions(test: &TestResult) -> Result<Descriptions> {
     let title = test.title();
     let description = test.description().unwrap();
 
-    let commit_message = format!("{}\n\n{}\n", title, description);
+    let commit_message = format!("{title}\n\n{description}\n");
 
     let file = read_to_string(test.path())?;
     let syntax = test.syntax();
 
     let issue = format!("Issue: {}", test.issue_url());
-    let file_codeblock = format!("```{}\n{}\n```", syntax, file);
-    let description_codeblock = format!("```\n{}\n```", description);
+    let file_codeblock = format!("```{syntax}\n{file}\n```");
+    let description_codeblock = format!("```\n{description}\n```");
 
-    let pr_body = format!("{}\n{}\n{}\n", issue, file_codeblock, description_codeblock);
+    let pr_body = format!("{issue}\n{file_codeblock}\n{description_codeblock}\n");
 
     Ok(Descriptions {
         commit_message,
@@ -55,7 +55,7 @@ fn move_to_fixed<'a>(repo: &'a Repository, test: &TestResult) -> Result<Tree<'a>
     index.remove(test.path(), 0)?;
 
     let new_path =
-        new_path_bytes(test.path()).with_context(|| format!("ICE has no filename: {:?}", test))?;
+        new_path_bytes(test.path()).with_context(|| format!("ICE has no filename: {test:?}"))?;
 
     entry.path = new_path;
 
@@ -93,7 +93,7 @@ pub(crate) fn fix(test: &TestResult, config: &github::Config) -> Result<()> {
     let remote_branch = format!("refs/remotes/origin/autofix/{}", &path);
 
     if repo.find_reference(&remote_branch).is_ok() {
-        println!("Branch exists: {}", remote_branch);
+        println!("Branch exists: {remote_branch}");
         return Ok(());
     }
 
@@ -123,6 +123,6 @@ pub(crate) fn fix(test: &TestResult, config: &github::Config) -> Result<()> {
         },
     )?;
 
-    println!("Created pull request: {}", url);
+    println!("Created pull request: {url}");
     Ok(())
 }

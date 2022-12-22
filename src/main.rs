@@ -17,7 +17,7 @@ fn main() -> Result<()> {
 
     let mut paths = Vec::new();
     for result in &failed {
-        eprintln!("\n{}", result);
+        eprintln!("\n{result}");
         paths.push(result.path());
     }
 
