@@ -13,5 +13,5 @@ impl Restriction for Test {
 
 fn main() {
     let t = Test {};
-    let x: &Database<Inner = _> = &t;
+    let x: &dyn Database<Inner = _> = &t;
 }

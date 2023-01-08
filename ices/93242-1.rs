@@ -1,5 +1,3 @@
-rustc --edition 2021 - 2>&1 << EOF
-
 pub async fn something(path: &[usize]) -> usize {
     // Without this async block it doesn't ICE
     async {
@@ -15,6 +13,4 @@ pub async fn something(path: &[usize]) -> usize {
     .await
 }
 
-pub fn main() {}
-
-EOF
+fn main() {}
