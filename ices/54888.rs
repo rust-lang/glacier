@@ -15,5 +15,5 @@ where
 
 
 fn main() {
-    let foo = Ptr(Box::new(5)) as Ptr<::std::any::Any>;
+    let foo = Ptr(Box::new(5)) as Ptr<dyn std::any::Any>;
 }

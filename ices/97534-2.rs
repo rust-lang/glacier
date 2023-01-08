@@ -1,7 +1,3 @@
-#!/bin/sh
-
-rustc --edition=2021 - << EOF
-
 macro_rules! foo {
     () => {};
 }
@@ -18,6 +14,4 @@ use bar as baz;
 
 baz! {}
 
-pub fn main() {}
-
-EOF
+fn main() {}

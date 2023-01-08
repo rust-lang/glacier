@@ -1,7 +1,3 @@
-#!/bin/bash
-
-rustc --edition=2021 - <<'EOF'
-
 #![feature(type_alias_impl_trait)]
 
 #[derive(Copy, Clone)]
@@ -14,5 +10,3 @@ fn main() {
         let Foo((a, b)) = foo;
     };
 }
-
-EOF
