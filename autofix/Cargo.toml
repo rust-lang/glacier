@@ -8,7 +8,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = { workspace = true }
-git2 = { version = "0.15", default-features = false, features = ["https"] }
+git2 = { version = "0.16", default-features = false, features = ["https"] }
 glacier = "0.1.0"
 once_cell = { workspace = true }
 reqwest = { workspace = true }
