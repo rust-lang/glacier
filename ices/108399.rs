@@ -19,3 +19,4 @@ where
     f(&mut ()).await
 }
 
+fn main() {}

@@ -10,6 +10,4 @@ struct _Container<T> {
     pub cells: dyn Cell<T>,
 }
 
-
 fn main() {}
-

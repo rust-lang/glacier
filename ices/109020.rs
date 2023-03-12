@@ -35,4 +35,3 @@ where
 fn main() {
     with_emplacable_for(|_| {});
 }
-
