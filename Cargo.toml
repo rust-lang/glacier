@@ -15,6 +15,7 @@ tempfile = "3.1.0"
 [workspace]
 members = [
     "autofix",
+    "grabber",
     "labeler"
 ]
 
