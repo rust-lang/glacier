@@ -1,5 +1,4 @@
 #![feature(generic_const_exprs)]
-pub fn main() {}
 
 impl EntriesBuffer {
     fn a(&self) -> impl Iterator {
