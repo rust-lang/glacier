@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rustc -C opt-level=3 - << EOF
+rustc -C opt-level=3 -Zvalidate-mir - << EOF
 #![crate_type = "lib"]
 
 pub struct A;
