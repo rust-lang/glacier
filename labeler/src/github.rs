@@ -102,7 +102,7 @@ pub(crate) fn get_labeled_issues(
     if pages > 1 {
         for i in 2..=pages {
             let url = format!(
-                "https://api.github.com/repos/rust-lang/rust/issues?labels={label_name}&state=all&page={i}"
+                "https://api.github.com/repos/{repo}/issues?labels={label_name}&state=all&page={i}"
             );
             let mut paged_issues: Vec<Issue> = CLIENT
                 .get(&url)
