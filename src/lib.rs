@@ -50,7 +50,7 @@ impl ICE {
         let workdir = tempfile::tempdir()?;
         let output = match self.mode {
             TestMode::SingleFile => Command::new(RUSTC)
-                .args(&["--edition", "2018"])
+                .args(["--edition", "2021"])
                 .arg(std::fs::canonicalize(&self.path)?)
                 .current_dir(workdir.path())
                 .output()?,
@@ -139,9 +139,9 @@ impl TestResult {
         let path = self.path().display();
 
         match self.outcome {
-            Outcome::NoError => format!("{}: fixed with no errors", path),
-            Outcome::Errored => format!("{}: fixed with errors", path),
-            Outcome::ICEd => format!("{}: ICEd", path),
+            Outcome::NoError => format!("{path}: fixed with no errors"),
+            Outcome::Errored => format!("{path}: fixed with errors"),
+            Outcome::ICEd => format!("{path}: ICEd"),
         }
     }
 
@@ -176,7 +176,7 @@ impl TestResult {
             .next()
             .unwrap();
 
-        format!("https://github.com/rust-lang/rust/issues/{}", issue_number)
+        format!("https://github.com/rust-lang/rust/issues/{issue_number}")
     }
 
     pub fn syntax(&self) -> &'static str {
@@ -192,7 +192,7 @@ impl fmt::Display for TestResult {
         write!(f, "{}", self.title())?;
 
         if let Some(description) = self.description() {
-            write!(f, "\n{}", description)?;
+            write!(f, "\n{description}")?;
         }
 
         Ok(())
@@ -217,7 +217,7 @@ pub fn discover(dir: &str) -> Result<Vec<ICE>> {
     }
 
     ices.sort_unstable_by(|a, b| {
-        alphanumeric_sort::compare_os_str(&a.path.as_os_str(), &b.path.as_os_str())
+        alphanumeric_sort::compare_os_str(a.path.as_os_str(), b.path.as_os_str())
     });
 
     Ok(ices)

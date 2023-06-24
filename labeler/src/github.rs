@@ -68,12 +68,11 @@ pub(crate) fn label_issue(
     issue_number: usize,
 ) -> Result<(), reqwest::Error> {
     let url = format!(
-        "https://api.github.com/repos/rust-lang/rust/issues/{}/labels",
-        issue_number
+        "https://api.github.com/repos/rust-lang/rust/issues/{issue_number}/labels"
     );
 
     CLIENT
-        .post(&url)
+        .post(url)
         .bearer_auth(&config.token)
         .json(&labels)
         .send()?
@@ -88,8 +87,7 @@ pub(crate) fn get_labeled_issues(
     label_name: String,
 ) -> Result<Vec<Issue>, reqwest::Error> {
     let url = format!(
-        "https://api.github.com/repos/{}/issues?labels={}&state=all",
-        repo, label_name
+        "https://api.github.com/repos/{repo}/issues?labels={label_name}&state=all"
     );
 
     let mut issues: Vec<Issue> = CLIENT
@@ -104,8 +102,7 @@ pub(crate) fn get_labeled_issues(
     if pages > 1 {
         for i in 2..=pages {
             let url = format!(
-                "https://api.github.com/repos/rust-lang/rust/issues?labels={}&state=all&page={}",
-                label_name, i
+                "https://api.github.com/repos/{repo}/issues?labels={label_name}&state=all&page={i}"
             );
             let mut paged_issues: Vec<Issue> = CLIENT
                 .get(&url)

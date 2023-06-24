@@ -22,4 +22,3 @@ fn main() {
 }
 
 EOF
-

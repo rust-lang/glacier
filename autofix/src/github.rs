@@ -50,7 +50,7 @@ pub(crate) fn pull_request(config: &Config, options: &PullRequestOptions) -> Res
     let url = format!("https://api.github.com/repos/{}/pulls", config.repo);
 
     let pr: PullRequest = CLIENT
-        .post(&url)
+        .post(url)
         .header(reqwest::header::ACCEPT, "application/vnd.github.v3+json")
         .bearer_auth(&config.token)
         .json(&options)

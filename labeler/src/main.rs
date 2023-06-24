@@ -14,7 +14,7 @@ fn main() {
         .collect::<Vec<_>>();
     tested_issue_list.sort_unstable();
     tested_issue_list.dedup();
-    println!("current tested issue list: {:?}", tested_issue_list);
+    println!("current tested issue list: {tested_issue_list:?}");
 
     let issues =
         crate::github::get_labeled_issues(&config, "rust-lang/rust", "glacier".to_string());
@@ -35,8 +35,8 @@ fn main() {
         labeled_issue_numbers.push(i.number);
     }
     tested_issue_list.retain(|&x| !labeled_issue_numbers.contains(&x));
-    println!("unlabeled issue list: {:?}", tested_issue_list);
-    println!("closed issues list: {:?}", closed_issue_numbers);
+    println!("unlabeled issue list: {tested_issue_list:?}");
+    println!("closed issues list: {closed_issue_numbers:?}");
 
     let labels: crate::github::Labels = crate::github::Labels {
         labels: vec!["glacier".to_string()],
@@ -53,7 +53,7 @@ fn main() {
             }
             Err(e) => {
                 eprintln!("Failed the `{:?}` label to issue#{:?}", &labels.labels, i);
-                eprintln!("The reason is here: {:?}", e);
+                eprintln!("The reason is here: {e:?}");
                 std::process::exit(1);
             }
         }
@@ -65,7 +65,7 @@ fn main() {
         crate::github::get_labeled_issues(&config, "rust-lang/glacier", "triage".to_string())
             .unwrap();
     for id in closed_issue_numbers {
-        let title = format!("issue-{}", id);
+        let title = format!("issue-{id}");
         if issues_in_triage
             .iter()
             .any(|issue| issue.title.starts_with(&title))
@@ -74,11 +74,11 @@ fn main() {
             continue;
         }
 
-        let body = format!("See rust-lang/rust#{}", id);
+        let body = format!("See rust-lang/rust#{id}");
 
         crate::github::create_issue(
             &config,
-            &format!("{} has been closed", title),
+            &format!("{title} has been closed"),
             &body,
             &["triage"],
         )
