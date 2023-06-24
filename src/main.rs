@@ -3,7 +3,8 @@ use glacier::{Outcome, TestResult};
 use rayon::prelude::*;
 
 fn main() -> Result<()> {
-    let failed = glacier::test_all()?
+    let filter = glacier::Filter::try_from_args(std::env::args())?;
+    let failed = glacier::test_all_matching_filter(&filter)?
         .filter(|res| {
             if let Ok(test) = res {
                 eprint!("{}", test.outcome_token());
