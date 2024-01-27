@@ -337,6 +337,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "glacier-grabber"
+version = "0.1.0"
+dependencies = [
+ "glacier",
+ "once_cell",
+ "regex",
+ "reqwest",
+ "serde",
+]
+
+[[package]]
 name = "h2"
 version = "0.3.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
